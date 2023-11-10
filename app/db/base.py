@@ -2,6 +2,7 @@ from datetime import datetime
 
 import pymongo
 import pytz
+
 from app.exceptions.custom_exceptions import MissingAttributeError
 
 
@@ -140,13 +141,15 @@ class DataBase:
         dataset = database[table_name]
 
         if data["user_uuid"] is None:
-            user_id = (
-                dataset.find()
-                .sort("user_uuid", pymongo.DESCENDING)
-                .limit(1)[0]["user_uuid"]
-            )
-            data.update({"user_uuid": user_id + 1})
-            response = dataset.insert_one(data)
+            try:
+                user_id = (
+                    dataset.find().sort("_id", pymongo.DESCENDING).limit(1)[0]["_id"]
+                )
+            except Exception as e:
+                user_id = 0
+
+            del data["user_uuid"]
+            data.update({"_id": user_id + 1})
 
         if isinstance(data, dict):
             response = dataset.insert_one(data)
