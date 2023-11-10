@@ -39,4 +39,4 @@ class Config:
     load_dotenv()
     DB_URL = os.environ.get("DB_URL")
     DB_NAME = os.environ.get("DB_NAME")
-    TABLE_NAME = os.environ.get("DB_NAME")
+    TABLE_NAME = os.environ.get("PROFILE_TABLE_NAME")
