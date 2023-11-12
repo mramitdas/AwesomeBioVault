@@ -1,6 +1,6 @@
 from typing import List
 
-from flask import Blueprint, abort, request
+from flask import Blueprint, abort, request, render_template
 from werkzeug.exceptions import (BadRequest, InternalServerError,
                                  MethodNotAllowed)
 
@@ -79,7 +79,7 @@ def save_user_profile():
     abort(MethodNotAllowed.code, description="Unsupported request method")
 
 
-@user.route("profiles/", methods=["GET"])
+@user.route("/", methods=["GET"])
 def get_user_profiles() -> List[UserOut]:
     """
     Retrieve a list of users.
@@ -124,4 +124,6 @@ def get_user_profiles() -> List[UserOut]:
         raise NotFound("No users found")
 
     # Serialize the list of user_data using the UserOut schema
-    return [UserOut(**user).dict() for user in user_data]
+    data = [UserOut(**user).dict() for user in user_data]
+    
+    return render_template('index.html')

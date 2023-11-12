@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Document</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    
+<div id="nav-bar">
+    <input id="nav-toggle" type="checkbox"/>
+    <div id="nav-header"><a id="nav-title" href="https://github.com/mramitdas/AwesomeBioVault/" target="_blank">AwesomeBio<i class="fas fa-solid fa-vault"></i></a>
+      <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
+      <hr/>
+    </div>
+    <div id="nav-content">
+      <div class="nav-button"><i class="fas fa-solid fa-house"></i><span>Home</span></div>
+      <!-- <div class="nav-button"><i class="fas fa-images"></i><span>Assets</span></div> -->
+      <div class="nav-button"><i class="fas fa-thumbtack"></i><span>Pinned Items</span></div>
+      <hr/>
+      <div class="nav-button"><i class="fas fa-regular fa-clock"></i><span>Latest</span></div>
+      <div class="nav-button"><i class="fas fa-chart-line"></i><span>Trending</span></div>
+      <div class="nav-button"><i class="fas fa-heart"></i><span>Popular</span></div>
+      <div class="nav-button"><i class="fas fa-fire"></i><span>Hot</span></div>
+      <div class="nav-button"><i class="fas fa-magic"></i><span>Creative</span></div>
+      <hr/>
+      <div class="nav-button"><i class="fas fa-gem"></i><span>Add Profile</span></div>
+      <div id="nav-content-highlight"></div>
+    </div>
+    <input id="nav-footer-toggle" type="checkbox"/>
+    <div id="nav-footer">
+      <div id="nav-footer-heading">
+        <div id="nav-footer-avatar"><img src="https://gravatar.com/avatar/4474ca42d303761c2901fa819c4f2547"/></div>
+        <div id="nav-footer-titlebox"><a id="nav-footer-title" href="https://codepen.io/uahnbu/pens/public" target="_blank">mramitdas</a><span id="nav-footer-subtitle">Developer</span></div>
+        <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+      </div>
+      <div id="nav-footer-content">
+        <Lorem>description to be added.</Lorem>
+      </div>
+    </div>
+  </div>
+  <script src="https://kit.fontawesome.com/5f6c2c687e.js" crossorigin="anonymous"></script>
+</body>
+</html>
