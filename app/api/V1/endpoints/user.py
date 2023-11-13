@@ -1,6 +1,6 @@
 from typing import List
 
-from flask import Blueprint, abort, render_template, request
+from flask import Blueprint, abort, render_template, request, redirect, url_for
 from werkzeug.exceptions import (BadRequest, InternalServerError,
                                  MethodNotAllowed)
 
@@ -26,36 +26,24 @@ def save_user_profile():
         BadRequest: If there is a validation error in the incoming JSON data or the profile data.
         InternalServerError: If there is an error while trying to register the user profile.
         MethodNotAllowed: If the HTTP method is not POST.
-
-    Examples:
-        >>> POST /profile/
-        >>> {
-        >>>     "full_name": "John Doe",
-        >>>     "email": "john@example.com",
-        >>>     "github_profile": "johndoe"
-        >>> }
-        >>>
-        >>> Response:
-        >>> {
-        >>>     "status": "success",
-        >>>     "message": "Profile registration successful",
-        >>>     "data": {
-        >>>         "full_name": "John Doe",
-        >>>         "github_profile": "johndoe"
-        >>>     }
-        >>> }
-
     """
     if request.method == "POST":
+        
+        data = {
+            "email": request.form.get('email'),
+            "github_username": request.form.get('username'),
+            # "tags": request.form.get('hashtags')
+        }
+        
         try:
-            user_data = UserIn(**request.json)
+            user_data = UserIn(**data)
         except ValueError as e:
             raise BadRequest(f"Validation error: {e}")
 
         user_instance = UserModel()
 
         try:
-            user_dict = user_data.dict(exclude_unset=False)
+            user_dict = user_data.model_dump(exclude_unset=False)
         except ValueError as e:
             raise BadRequest(f"Invalid profile data: {e}")
 
@@ -65,14 +53,8 @@ def save_user_profile():
             raise InternalServerError(f"Failed to register user: {e}")
 
         if response.acknowledged:
-            return {
-                "status": "success",
-                "message": "Profile registration successful",
-                "data": {
-                    "full_name": user_dict.get("full_name"),
-                    "github_profile": user_dict.get("github_profile"),
-                },
-            }
+            return redirect(url_for('user.get_user_profiles'))
+        
         return {"status": "failure", "message": "Profile registration failed"}
 
     # Handle GET request if needed

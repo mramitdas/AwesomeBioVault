@@ -121,43 +121,45 @@
     <!-- add profile form starts here -->
     <div class="modal">
       <div class="modal-container">
-        <div class="modal-left">
-          <h1 class="modal-title">Join Our Community!</h1>
-          <p class="modal-desc">Unlock Exclusive Features</p>
-          <div class="input-block">
-            <label for="email" class="input-label">Email</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="mramitdas99@gmail.com"
-            />
-          </div>
-          <div class="input-block">
-            <label for="username" class="input-label">Username</label>
-            <input
-              type="text"
-              name="username"
-              id="username"
-              placeholder="mramitdas"
-            />
-          </div>
-          <div class="input-block">
-            <label for="hashtags" class="input-label">HashTags</label>
-            <input
-              type="text"
-              id="hashtags"
-              autocomplete="off"
-              name="hashtags"
-              placeholder="#programming"
-            />
-            <div class="tag-container"></div>
-          </div>
+        <form action="/profile/" method="POST">
+          <div class="modal-left">
+            <h1 class="modal-title">Join Our Community!</h1>
+            <p class="modal-desc">Unlock Exclusive Features</p>
+            <div class="input-block">
+              <label for="email" class="input-label">Email</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="mramitdas99@gmail.com"
+              />
+            </div>
+            <div class="input-block">
+              <label for="username" class="input-label">Username</label>
+              <input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="mramitdas"
+              />
+            </div>
+            <div class="input-block">
+              <label for="hashtags" class="input-label">HashTags</label>
+              <input
+                type="text"
+                id="hashtags"
+                autocomplete="off"
+                name="hashtags"
+                placeholder="#programming"
+              />
+              <div class="tag-container"></div>
+            </div>
 
-          <div class="modal-buttons">
-            <button class="input-button">Submit</button>
+            <div class="modal-buttons">
+              <button class="input-button">Submit</button>
+            </div>
           </div>
-        </div>
+        </form>
         <div class="modal-right">
           <img
             src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=dfd2ec5a01006fd8c4d7592a381d3776&auto=format&fit=crop&w=1000&q=80"
