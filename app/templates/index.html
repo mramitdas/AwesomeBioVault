@@ -119,30 +119,41 @@
     <!-- Profile card ends here -->
 
     <!-- add profile form starts here -->
-
     <div class="modal">
       <div class="modal-container">
         <div class="modal-left">
           <h1 class="modal-title">Join Our Community!</h1>
           <p class="modal-desc">Unlock Exclusive Features</p>
           <div class="input-block">
-            <label for="email" class="input-label">Username</label>
+            <label for="email" class="input-label">Email</label>
             <input
               type="email"
               name="email"
               id="email"
+              placeholder="mramitdas99@gmail.com"
+            />
+          </div>
+          <div class="input-block">
+            <label for="username" class="input-label">Username</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
               placeholder="mramitdas"
             />
           </div>
           <div class="input-block">
-            <label for="password" class="input-label">HashTags</label>
+            <label for="hashtags" class="input-label">HashTags</label>
             <input
-              type="password"
-              name="password"
-              id="password"
+              type="text"
+              id="hashtags"
+              autocomplete="off"
+              name="hashtags"
               placeholder="#programming"
             />
+            <div class="tag-container"></div>
           </div>
+
           <div class="modal-buttons">
             <button class="input-button">Submit</button>
           </div>
@@ -170,5 +181,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/hashtag.js') }}"></script>
   </body>
 </html>
