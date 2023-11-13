@@ -88,176 +88,26 @@
     <div class="main_content">
       <ul class="cards">
         
+        {% for profile in data %}
         <li class="card_container">
           <a href="" class="card">
-            <img src="" class="card__image" alt="" />
+            <img src="" class="card__image" alt="mramitdas" />
             <div class="card__overlay">
               <div class="card__header">
                 <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
                   <path />
                 </svg>
-                <img class="card__thumb" src="https://avatars.githubusercontent.com/u/51442266?v=4" alt="" />
+                <img class="card__thumb" src={{ profile.profile_photo }} alt="mramitdas" />
                 <div class="card__header-text">
-                  <h3 class="card__title">Jessica Parker</h3>
-                  <span class="card__status">1 hour ago</span>
+                  <h3 class="card__title">{{ profile.full_name }}</h3>
+                  <span class="card__status">1012 views</span>
                 </div>
               </div>
-              <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
+              <p class="card__description">{{ profile.tags }}</p>
             </div>
           </a>
         </li>
-
-        <li class="card_container">
-          <a href="" class="card">
-            <img src="" class="card__image" alt="" />
-            <div class="card__overlay">
-              <div class="card__header">
-                <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
-                  <path />
-                </svg>
-                <img class="card__thumb" src="https://avatars.githubusercontent.com/u/51442266?v=4" alt="" />
-                <div class="card__header-text">
-                  <h3 class="card__title">Jessica Parker</h3>
-                  <span class="card__status">1 hour ago</span>
-                </div>
-              </div>
-              <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
-            </div>
-          </a>
-        </li>
-
-        <li class="card_container">
-          <a href="" class="card">
-            <img src="" class="card__image" alt="" />
-            <div class="card__overlay">
-              <div class="card__header">
-                <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
-                  <path />
-                </svg>
-                <img class="card__thumb" src="https://avatars.githubusercontent.com/u/51442266?v=4" alt="" />
-                <div class="card__header-text">
-                  <h3 class="card__title">Jessica Parker</h3>
-                  <span class="card__status">1 hour ago</span>
-                </div>
-              </div>
-              <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
-            </div>
-          </a>
-        </li>
-
-        <li class="card_container">
-          <a href="" class="card">
-            <img src="" class="card__image" alt="" />
-            <div class="card__overlay">
-              <div class="card__header">
-                <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
-                  <path />
-                </svg>
-                <img class="card__thumb" src="https://avatars.githubusercontent.com/u/51442266?v=4" alt="" />
-                <div class="card__header-text">
-                  <h3 class="card__title">Jessica Parker</h3>
-                  <span class="card__status">1 hour ago</span>
-                </div>
-              </div>
-              <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
-            </div>
-          </a>
-        </li>
-
-        <li class="card_container">
-          <a href="" class="card">
-            <img src="" class="card__image" alt="" />
-            <div class="card__overlay">
-              <div class="card__header">
-                <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
-                  <path />
-                </svg>
-                <img class="card__thumb" src="https://avatars.githubusercontent.com/u/51442266?v=4" alt="" />
-                <div class="card__header-text">
-                  <h3 class="card__title">Jessica Parker</h3>
-                  <span class="card__status">1 hour ago</span>
-                </div>
-              </div>
-              <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
-            </div>
-          </a>
-        </li>
-
-        <li class="card_container">
-          <a href="" class="card">
-            <img src="" class="card__image" alt="" />
-            <div class="card__overlay">
-              <div class="card__header">
-                <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
-                  <path />
-                </svg>
-                <img class="card__thumb" src="https://avatars.githubusercontent.com/u/51442266?v=4" alt="" />
-                <div class="card__header-text">
-                  <h3 class="card__title">Jessica Parker</h3>
-                  <span class="card__status">1 hour ago</span>
-                </div>
-              </div>
-              <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
-            </div>
-          </a>
-        </li>
-
-        <li class="card_container">
-          <a href="" class="card">
-            <img src="" class="card__image" alt="" />
-            <div class="card__overlay">
-              <div class="card__header">
-                <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
-                  <path />
-                </svg>
-                <img class="card__thumb" src="https://avatars.githubusercontent.com/u/51442266?v=4" alt="" />
-                <div class="card__header-text">
-                  <h3 class="card__title">Jessica Parker</h3>
-                  <span class="card__status">1 hour ago</span>
-                </div>
-              </div>
-              <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
-            </div>
-          </a>
-        </li>
-
-        <li class="card_container">
-          <a href="" class="card">
-            <img src="" class="card__image" alt="" />
-            <div class="card__overlay">
-              <div class="card__header">
-                <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
-                  <path />
-                </svg>
-                <img class="card__thumb" src="https://avatars.githubusercontent.com/u/51442266?v=4" alt="" />
-                <div class="card__header-text">
-                  <h3 class="card__title">Jessica Parker</h3>
-                  <span class="card__status">1 hour ago</span>
-                </div>
-              </div>
-              <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
-            </div>
-          </a>
-        </li>
-
-        <li class="card_container">
-          <a href="" class="card">
-            <img src="" class="card__image" alt="" />
-            <div class="card__overlay">
-              <div class="card__header">
-                <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
-                  <path />
-                </svg>
-                <img class="card__thumb" src="https://avatars.githubusercontent.com/u/51442266?v=4" alt="" />
-                <div class="card__header-text">
-                  <h3 class="card__title">Jessica Parker</h3>
-                  <span class="card__status">1 hour ago</span>
-                </div>
-              </div>
-              <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
-            </div>
-          </a>
-        </li>
+        {% endfor %}
 
       </ul>
       </div>
