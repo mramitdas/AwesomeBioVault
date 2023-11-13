@@ -432,6 +432,11 @@ label[for=nav-footer-toggle] {
 .card__image {      
   width: 100%;
   height: auto;
+  transition: 2s ease-in-out;
+}
+
+.card .card__image:hover{
+  transform: translateY(-50%);
 }
 
 .card__overlay {
