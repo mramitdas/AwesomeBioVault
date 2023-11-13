@@ -491,26 +491,21 @@ label[for=nav-footer-toggle] {
   font-size: 1em;
   margin: 0 0 .3em;
   color: var(--background);
-}
-
-.card__tagline {
-  display: block;
-  margin: 1em 0;
-  font-family: "Verdana, Geneva, Tahoma, sans-serif";  
-  font-size: .8em; 
-  color: var(--navbar-light-secondary);  
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  
 }
 
 .card__status {
   font-size: .8em;
   color: var(--navbar-light-secondary);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .card__description {
   padding: 0 2em 1em;
   margin: 0;
   color: var(--navbar-light-secondary);
-  font-family: "Verdana, Geneva, Tahoma, sans-serif";   
+  font-family: Verdana, Geneva, Tahoma, sans-serif;   
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
