@@ -1,6 +1,6 @@
 from typing import List
 
-from flask import Blueprint, abort, request, render_template
+from flask import Blueprint, abort, render_template, request
 from werkzeug.exceptions import (BadRequest, InternalServerError,
                                  MethodNotAllowed)
 
@@ -87,7 +87,7 @@ def get_user_profiles() -> List[UserOut]:
     Returns a list of user data in the response.
 
     This endpoint fetches user data from a data source and returns it as a list
-    of UserOut objects, which include user user_uuid, full name, and email.
+    of UserOut objects, which include user_uuid, full name, email, GitHub profile, GitHub avatar, profile views, and tags.
 
     Returns:
         List[UserOut]: A list of user data.
@@ -96,22 +96,8 @@ def get_user_profiles() -> List[UserOut]:
         HTTPException (status_code=500): If there is an error while trying to retrieve user data.
         HTTPException (status_code=404): If no users are found.
 
-    Examples:
-        >>> GET /profiles/
-        >>>
-        >>> Response:
-        >>> [
-        >>>     {
-        >>>         "user_uuid": 123,
-        >>>         "full_name": "John Doe",
-        >>>         "email": "john@example.com"
-        >>>     },
-        >>>     {
-        >>>         "user_uuid": 456,
-        >>>         "full_name": "Jane Smith",
-        >>>         "email": "jane@example.com"
-        >>>     }
-        >>> ]
+    Note:
+        The response is an HTML document containing the user profiles.
 
     """
     try:
@@ -124,6 +110,6 @@ def get_user_profiles() -> List[UserOut]:
         raise NotFound("No users found")
 
     # Serialize the list of user_data using the UserOut schema
-    data = [UserOut(**user).dict() for user in user_data]
-    
-    return render_template('index.html')
+    data = [UserOut(**user).model_dump() for user in user_data]
+
+    return render_template("index.html", data=data)
