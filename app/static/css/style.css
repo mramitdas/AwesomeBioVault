@@ -446,7 +446,7 @@ label[for=nav-footer-toggle] {
   transition: .2s ease-in-out;
 }
 
-.card:hover .card__overlay {
+.card .card__overlay:hover {
   transform: translateY(0);
 }
 
@@ -476,7 +476,7 @@ label[for=nav-footer-toggle] {
   d: path("M 40 80 c 22 0 40 -2 40 -39 v 40 Z");
 }       
 
-.card:hover .card__header {
+.card .card__overlay:hover .card__header {
   transform: translateY(0);
 }
 
