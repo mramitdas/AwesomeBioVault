@@ -101,4 +101,34 @@ class UserOut(BaseUser):
         Attributes:
             from_attributes (bool): Determines whether attribute values should be populated from class attributes when creating an instance of the model. If True, class attributes with the same name as fields in the model will be used to initialize those fields. Defaults to True, enabling attribute initialization from class attributes.
         """
+
+        from_attributes = True
+
+
+class UserUpdate(BaseModel):
+    """
+    Represents a user update model for modifying user data.
+
+    Attributes:
+        github_username (str): The unique identifier for the user whose data is being updated.
+        user_data (BaseUser): An instance of the BaseUser class containing updated user data.
+
+    Note:
+        - Use this class to define the criteria for selecting a user to update and provide the new user data to be applied.
+
+    Configuration Options:
+        - Config.from_attributes (bool): Determines whether attribute values should be populated from class attributes when creating an instance of the model. If True, class attributes with the same name as fields in the model will be used to initialize those fields. Defaults to True, enabling attribute initialization from class attributes.
+    """
+
+    github_username: str
+    user_data: BaseUser
+
+    class Config:
+        """
+        Configuration options for Pydantic models.
+
+        Attributes:
+            from_attributes (bool): Determines whether attribute values should be populated from class attributes when creating an instance of the model. If True, class attributes with the same name as fields in the model will be used to initialize those fields. Defaults to True, enabling attribute initialization from class attributes.
+        """
+
         from_attributes = True
