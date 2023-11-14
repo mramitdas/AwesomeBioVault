@@ -71,6 +71,15 @@ body {
   pointer-events: none;
 }
 
+#nav-toggle ~ #nav-footer #nav-footer-titlebox{
+  width: 30%;
+}
+
+#nav-toggle:checked ~ #nav-footer #nav-footer-titlebox,
+#nav-toggle:checked ~ #nav-footer #nav-footer-subtitle{
+  color: transparent;
+}
+
 #nav-bar {
   position: fixed;
   left: 1vw;
@@ -352,15 +361,14 @@ label[for="nav-toggle"] {
 #nav-footer-titlebox {
   position: relative;
   margin-left: 16px;
-  width: 10px;
   display: flex;
   flex-direction: column;
-  transition: opacity 1s;
+  transition: opacity 0.2s;
 }
 
 #nav-footer-subtitle {
   color: var(--navbar-light-secondary);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
 }
 
 #nav-footer-toggle:checked + #nav-footer {
@@ -386,7 +394,7 @@ label[for="nav-footer-toggle"] {
 #nav-footer-content {
   margin: 0 16px 16px 16px;
   border-top: solid 1px var(--navbar-light-secondary);
-  padding: 16px 0;
+  padding: 5px 0;
   color: var(--navbar-light-secondary);
   font-size: 0.8rem;
   overflow: auto;
