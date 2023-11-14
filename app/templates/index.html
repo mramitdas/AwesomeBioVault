@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>AwesomeBioVault</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/favicon.png') }}"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Side navigation bar starts here -->
+    <div id="nav-bar">
+      <input id="nav-toggle" type="checkbox" checked="false"/>
+      <div id="nav-header">
+        <a
+          id="nav-title"
+          href="https://github.com/mramitdas/AwesomeBioVault/"
+          target="_blank"
+          >AwesomeBio<i class="fas fa-solid fa-vault"></i
+        ></a>
+        <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
+        <hr />
+      </div>
+      <div id="nav-content">
+        <div class="nav-button">
+          <i class="fas fa-solid fa-house"></i><span>Home</span>
+        </div>
+        <!-- <div class="nav-button"><i class="fas fa-images"></i><span>Assets</span></div> -->
+        <div class="nav-button">
+          <i class="fas fa-thumbtack"></i><span>Pinned Items</span>
+        </div>
+        <hr />
+        <div class="nav-button">
+          <i class="fas fa-regular fa-clock"></i><span>Latest</span>
+        </div>
+        <div class="nav-button">
+          <i class="fas fa-chart-line"></i><span>Trending</span>
+        </div>
+        <div class="nav-button">
+          <i class="fas fa-heart"></i><span>Popular</span>
+        </div>
+        <div class="nav-button">
+          <i class="fas fa-fire"></i><span>Hot</span>
+        </div>
+        <div class="nav-button">
+          <i class="fas fa-magic"></i><span>Creative</span>
+        </div>
+        <hr />
+        <div class="nav-button nav-modal-trigger">
+          <i class="fas fa-gem"></i><span>Add Profile</span>
+        </div>
+        <div id="nav-content-highlight"></div>
+      </div>
+      <input id="nav-footer-toggle" type="checkbox" />
+      <div id="nav-footer">
+        <div id="nav-footer-heading">
+          <div id="nav-footer-avatar">
+            <img src="https://avatars.githubusercontent.com/u/51442266?v=4" />
+          </div>
+          <div id="nav-footer-titlebox">
+            <a
+              id="nav-footer-title"
+              href="https://codepen.io/uahnbu/pens/public"
+              target="_blank"
+              >mramitdas</a
+            ><span id="nav-footer-subtitle">Developer</span>
+          </div>
+          <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+        </div>
+        <div id="nav-footer-content">
+          <Lorem>description to be added.</Lorem>
+        </div>
+      </div>
+    </div>
+    <!-- Side navigation bar ends here -->
+
+    <!-- Profile card starts here -->
+    <div class="main_content">
+      <ul class="cards">
+        {% for profile in data %}
+        <li class="card_container">
+          <a href="https://github.com/{{ profile.github_username }}" target="_blank" onclick="incrementCounter('{{ profile.github_username }}')" class="card">
+            <img
+              src="{{ url_for('static', filename='images/1.png') }}"
+              class="card__image"
+              alt="mramitdas"
+            />
+            <div class="card__overlay">
+              <div class="card__header">
+                <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
+                  <path />
+                </svg>
+                <img
+                  class="card__thumb"
+                  src="{{ profile.github_avatar }}"
+                  alt="mramitdas"
+                />
+                <div class="card__header-text">
+                  <h3 class="card__title">{{ profile.full_name }}</h3>
+                  <span class="card__status"><span id="counter{{ profile.github_username }}">{{ profile.profile_views }}</span> views</span>
+                </div>
+              </div>
+              <p class="card__description">{{ profile.tags }}</p>
+            </div>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <!-- Profile card ends here -->
+
+    <!-- add profile form starts here -->
+    <div class="modal">
+      <div class="modal-container">
+        <form action="/profile/" method="POST">
+          <div class="modal-left">
+            <h1 class="modal-title">Join Our Community!</h1>
+            <p class="modal-desc">Unlock Exclusive Features</p>
+            <div class="input-block">
+              <label for="email" class="input-label">Email</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="mramitdas99@gmail.com"
+              />
+            </div>
+            <div class="input-block">
+              <label for="username" class="input-label">Username</label>
+              <input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="mramitdas"
+              />
+            </div>
+            <div class="input-block">
+              <label for="hashtags" class="input-label">HashTags</label>
+              <input
+                type="text"
+                id="hashtags"
+                autocomplete="off"
+                name="hashtags"
+                placeholder="#programming"
+              />
+              <div class="tag-container"></div>
+            </div>
+
+            <div class="modal-buttons">
+              <button class="input-button">Submit</button>
+            </div>
+          </div>
+        </form>
+        <div class="modal-right">
+          <img
+            src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=dfd2ec5a01006fd8c4d7592a381d3776&auto=format&fit=crop&w=1000&q=80"
+            alt=""
+          />
+        </div>
+        <button class="icon-button close-button">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+            <path
+              d="M 25 3 C 12.86158 3 3 12.86158 3 25 C 3 37.13842 12.86158 47 25 47 C 37.13842 47 47 37.13842 47 25 C 47 12.86158 37.13842 3 25 3 z M 25 5 C 36.05754 5 45 13.94246 45 25 C 45 36.05754 36.05754 45 25 45 C 13.94246 45 5 36.05754 5 25 C 5 13.94246 13.94246 5 25 5 z M 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.980469 15.990234 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 z"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- add profile form ends here -->
+
+    <script
+      src="https://kit.fontawesome.com/5f6c2c687e.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{{ url_for('static', filename='js/counter.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/hashtag.js') }}"></script>
+  </body>
+</html>

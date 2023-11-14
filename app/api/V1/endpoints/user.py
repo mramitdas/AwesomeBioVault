@@ -1,11 +1,17 @@
 from typing import List
 
-from flask import Blueprint, abort, request
-from werkzeug.exceptions import (BadRequest, InternalServerError,
-                                 MethodNotAllowed)
+from flask import Blueprint, abort, redirect, render_template, request, url_for
+from werkzeug.exceptions import (
+    BadRequest,
+    InternalServerError,
+    MethodNotAllowed,
+    NotFound,
+)
 
 from app.models.user import User as UserModel
 from app.schemas.user import UserIn, UserOut
+
+from .utils import fetch_user_info
 
 user = Blueprint("user", __name__)
 
@@ -27,35 +33,43 @@ def save_user_profile():
         InternalServerError: If there is an error while trying to register the user profile.
         MethodNotAllowed: If the HTTP method is not POST.
 
-    Examples:
-        >>> POST /profile/
-        >>> {
-        >>>     "full_name": "John Doe",
-        >>>     "email": "john@example.com",
-        >>>     "github_profile": "johndoe"
-        >>> }
-        >>>
-        >>> Response:
-        >>> {
-        >>>     "status": "success",
-        >>>     "message": "Profile registration successful",
-        >>>     "data": {
-        >>>         "full_name": "John Doe",
-        >>>         "github_profile": "johndoe"
-        >>>     }
-        >>> }
+    Example:
+        To save a user's profile, send a POST request to the /profile/ endpoint with the required data in the request form.
+        The expected data includes 'email' and 'github_username'. Optional data such as 'full_name', 'github_avatar', and 'tags'
+        may be retrieved from the GitHub API if the 'github_username' is provided.
 
+    Note:
+        The 'tags' field is currently commented out in the data dictionary. Uncomment and modify as needed based on your
+        application's requirements.
+
+    TODO:
+        - Uncomment the 'tags' field in the data dictionary if needed.
+        - Implement handling of GET requests if required.
     """
     if request.method == "POST":
+        data = {
+            "email": request.form.get("email"),
+            "github_username": request.form.get("username"),
+            # "tags": request.form.get('hashtags')
+        }
+
+        response_code, response_data = fetch_user_info(
+            username=request.form.get("username")
+        )
+        if response_code is not None:
+            data["full_name"] = response_data.get("name")
+            data["github_avatar"] = response_data.get("avatar_url")
+
+        print(data)
         try:
-            user_data = UserIn(**request.json)
+            user_data = UserIn(**data)
         except ValueError as e:
             raise BadRequest(f"Validation error: {e}")
 
         user_instance = UserModel()
 
         try:
-            user_dict = user_data.dict(exclude_unset=False)
+            user_dict = user_data.model_dump(exclude_unset=False)
         except ValueError as e:
             raise BadRequest(f"Invalid profile data: {e}")
 
@@ -65,21 +79,15 @@ def save_user_profile():
             raise InternalServerError(f"Failed to register user: {e}")
 
         if response.acknowledged:
-            return {
-                "status": "success",
-                "message": "Profile registration successful",
-                "data": {
-                    "full_name": user_dict.get("full_name"),
-                    "github_profile": user_dict.get("github_profile"),
-                },
-            }
+            return redirect(url_for("user.get_user_profiles"))
+
         return {"status": "failure", "message": "Profile registration failed"}
 
     # Handle GET request if needed
     abort(MethodNotAllowed.code, description="Unsupported request method")
 
 
-@user.route("profiles/", methods=["GET"])
+@user.route("/", methods=["GET"])
 def get_user_profiles() -> List[UserOut]:
     """
     Retrieve a list of users.
@@ -87,7 +95,7 @@ def get_user_profiles() -> List[UserOut]:
     Returns a list of user data in the response.
 
     This endpoint fetches user data from a data source and returns it as a list
-    of UserOut objects, which include user user_uuid, full name, and email.
+    of UserOut objects, which include user_uuid, full name, email, GitHub profile, GitHub avatar, profile views, and tags.
 
     Returns:
         List[UserOut]: A list of user data.
@@ -96,22 +104,8 @@ def get_user_profiles() -> List[UserOut]:
         HTTPException (status_code=500): If there is an error while trying to retrieve user data.
         HTTPException (status_code=404): If no users are found.
 
-    Examples:
-        >>> GET /profiles/
-        >>>
-        >>> Response:
-        >>> [
-        >>>     {
-        >>>         "user_uuid": 123,
-        >>>         "full_name": "John Doe",
-        >>>         "email": "john@example.com"
-        >>>     },
-        >>>     {
-        >>>         "user_uuid": 456,
-        >>>         "full_name": "Jane Smith",
-        >>>         "email": "jane@example.com"
-        >>>     }
-        >>> ]
+    Note:
+        The response is an HTML document containing the user profiles.
 
     """
     try:
@@ -124,4 +118,6 @@ def get_user_profiles() -> List[UserOut]:
         raise NotFound("No users found")
 
     # Serialize the list of user_data using the UserOut schema
-    return [UserOut(**user).dict() for user in user_data]
+    data = [UserOut(**user).model_dump() for user in user_data]
+
+    return render_template("index.html", data=data)
