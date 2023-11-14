@@ -88,7 +88,7 @@
       <ul class="cards">
         {% for profile in data %}
         <li class="card_container">
-          <a href="" class="card">
+          <a href="https://github.com/{{ profile.github_username }}" target="_blank" class="card">
             <img
               src="{{ url_for('static', filename='images/1.png') }}"
               class="card__image"
