@@ -16,32 +16,13 @@ class BaseUser(BaseModel):
 
     Config:
         from_attributes (bool): Indicates whether attribute values should be populated from the corresponding class attributes when creating an instance. Defaults to True.
-
-    Examples:
-        >>> user_data = {
-        ...     "full_name": "John Doe",
-        ...     "email": "john@example.com",
-        ...     "github_profile": "johndoe",
-        ...     "github_username": "john_doe",
-        ...     "tags": ["developer", "python"],
-        ...     "profile_views": 100
-        ... }
-        >>> user = BaseUser(**user_data)
-        >>> user.full_name
-        'John Doe'
-        >>> user.email
-        'john@example.com'
-        >>> user.github_username
-        'john_doe'
-        >>> user.tags
-        ['developer', 'python']
-        >>> user.profile_views
-        100
     """
 
+    full_name: constr(strip_whitespace=True, max_length=50) | None = None
     github_username: str | None = None
+    github_avatar: str | None = None
     tags: list | None = None
-    profile_views: int | None = None
+    profile_views: int | None = 0
 
     class Config:
         """
@@ -75,34 +56,6 @@ class UserIn(TimestampMixin, BaseUser):
     Inherits from:
         - TimestampMixin: A mixin class providing timestamp fields (e.g., created_at, updated_at).
         - BaseUser: The base user model with common attributes.
-
-    Examples:
-        >>> user_data = {
-        ...     "full_name": "John Doe",
-        ...     "email": "john@example.com",
-        ...     "password": "secretpass",
-        ...     "user_uuid": 123,
-        ...     "github_username": "john_doe",
-        ...     "tags": ["developer", "python"],
-        ...     "profile_views": 100,
-        ...     "created_at": "2023-11-13 || 10:30:45:678",
-        ...     "updated_at": "2023-11-13 || 10:30:45:678"
-        ... }
-        >>> user = UserIn(**user_data)
-        >>> user.full_name
-        'John Doe'
-        >>> user.email
-        'john@example.com'
-        >>> user.github_username
-        'johndoe'
-        >>> user.password
-        'secretpass'
-        >>> user.created_at
-        '2023-11-13 || 10:30:45:678'
-        >>> user.updated_at
-        '2023-11-13 || 10:30:45:678'
-        >>> user.profile_views
-        100
     """
 
     user_uuid: int | None = None
@@ -139,33 +92,7 @@ class UserOut(BaseUser):
 
     Note:
         This class serves as a specialized version of `BaseUser` specifically designed for representing user data in response objects. It introduces additional attributes: `full_name`, `github_avatar`, `github_username`, `profile_views`, and `tags`.
-
-    Examples:
-        >>> user_data = {
-        ...     "full_name": "amit",
-        ...     "github_avatar": "https://avatars.githubusercontent.com/u/51442266?v=4",
-        ...     "github_username": "mramitdas",
-        ...     "profile_views": 1002,
-        ...     "tags": ["python", "programming"],
-        ...     "user_uuid": 123
-        ... }
-        >>> user = UserOut(**user_data)
-        >>> user.full_name
-        'amit'
-        >>> user.github_avatar
-        'https://avatars.githubusercontent.com/u/51442266?v=4'
-        >>> user.github_username
-        'mramitdas'
-        >>> user.profile_views
-        1002
-        >>> user.tags
-        ['python', 'programming']
-        >>> user.user_uuid
-        123
     """
-
-    full_name: constr(strip_whitespace=True, max_length=50) | None = None
-    github_avatar: str | None = None
 
     class Config:
         """
@@ -174,5 +101,4 @@ class UserOut(BaseUser):
         Attributes:
             from_attributes (bool): Determines whether attribute values should be populated from class attributes when creating an instance of the model. If True, class attributes with the same name as fields in the model will be used to initialize those fields. Defaults to True, enabling attribute initialization from class attributes.
         """
-
         from_attributes = True
