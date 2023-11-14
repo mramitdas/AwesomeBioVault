@@ -88,7 +88,7 @@
       <ul class="cards">
         {% for profile in data %}
         <li class="card_container">
-          <a href="https://github.com/{{ profile.github_username }}" target="_blank" class="card">
+          <a href="https://github.com/{{ profile.github_username }}" target="_blank" onclick="incrementCounter('{{ profile.github_username }}')" class="card">
             <img
               src="{{ url_for('static', filename='images/1.png') }}"
               class="card__image"
@@ -106,7 +106,7 @@
                 />
                 <div class="card__header-text">
                   <h3 class="card__title">{{ profile.full_name }}</h3>
-                  <span class="card__status">1012 views</span>
+                  <span class="card__status"><span id="counter{{ profile.github_username }}">{{ profile.profile_views }}</span> views</span>
                 </div>
               </div>
               <p class="card__description">{{ profile.tags }}</p>
@@ -182,6 +182,7 @@
       src="https://kit.fontawesome.com/5f6c2c687e.js"
       crossorigin="anonymous"
     ></script>
+    <script src="{{ url_for('static', filename='js/counter.js') }}"></script>
     <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
     <script src="{{ url_for('static', filename='js/hashtag.js') }}"></script>
   </body>
