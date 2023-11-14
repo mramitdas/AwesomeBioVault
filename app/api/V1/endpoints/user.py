@@ -1,11 +1,17 @@
 from typing import List
 
-from flask import Blueprint, abort, render_template, request, redirect, url_for
-from werkzeug.exceptions import (BadRequest, InternalServerError,
-                                 MethodNotAllowed)
+from flask import Blueprint, abort, redirect, render_template, request, url_for
+from werkzeug.exceptions import (
+    BadRequest,
+    InternalServerError,
+    MethodNotAllowed,
+    NotFound,
+)
 
 from app.models.user import User as UserModel
 from app.schemas.user import UserIn, UserOut
+
+from .utils import fetch_user_info
 
 user = Blueprint("user", __name__)
 
@@ -26,15 +32,35 @@ def save_user_profile():
         BadRequest: If there is a validation error in the incoming JSON data or the profile data.
         InternalServerError: If there is an error while trying to register the user profile.
         MethodNotAllowed: If the HTTP method is not POST.
+
+    Example:
+        To save a user's profile, send a POST request to the /profile/ endpoint with the required data in the request form.
+        The expected data includes 'email' and 'github_username'. Optional data such as 'full_name', 'github_avatar', and 'tags'
+        may be retrieved from the GitHub API if the 'github_username' is provided.
+
+    Note:
+        The 'tags' field is currently commented out in the data dictionary. Uncomment and modify as needed based on your
+        application's requirements.
+
+    TODO:
+        - Uncomment the 'tags' field in the data dictionary if needed.
+        - Implement handling of GET requests if required.
     """
     if request.method == "POST":
-        
         data = {
-            "email": request.form.get('email'),
-            "github_username": request.form.get('username'),
+            "email": request.form.get("email"),
+            "github_username": request.form.get("username"),
             # "tags": request.form.get('hashtags')
         }
-        
+
+        response_code, response_data = fetch_user_info(
+            username=request.form.get("username")
+        )
+        if response_code is not None:
+            data["full_name"] = response_data.get("name")
+            data["github_avatar"] = response_data.get("avatar_url")
+
+        print(data)
         try:
             user_data = UserIn(**data)
         except ValueError as e:
@@ -53,8 +79,8 @@ def save_user_profile():
             raise InternalServerError(f"Failed to register user: {e}")
 
         if response.acknowledged:
-            return redirect(url_for('user.get_user_profiles'))
-        
+            return redirect(url_for("user.get_user_profiles"))
+
         return {"status": "failure", "message": "Profile registration failed"}
 
     # Handle GET request if needed
