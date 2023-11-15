@@ -7,11 +7,11 @@ from werkzeug.exceptions import (
     MethodNotAllowed,
     NotFound,
 )
+from .utils import async_capture_screenshot, fetch_user_info
 
 from app.models.user import User as UserModel
-from app.schemas.user import UserIn, UserOut, UserUpdate, UserSearch
+from app.schemas.user import UserIn, UserOut, UserSearch, UserUpdate
 
-from .utils import fetch_user_info
 
 user = Blueprint("user", __name__)
 
@@ -49,7 +49,9 @@ def save_user_profile():
     if request.method == "POST":
         data = request.json
 
-        response_code, response_data = fetch_user_info(username=data.get("username"))
+        response_code, response_data = fetch_user_info(
+            username=data.get("github_username")
+        )
         if response_code is not None:
             data["full_name"] = response_data.get("name")
             data["github_avatar"] = response_data.get("avatar_url")
@@ -69,6 +71,7 @@ def save_user_profile():
         user_instance = UserModel()
         try:
             response = user_instance.save(data=user_dict)
+            async_capture_screenshot.delay(data.get("github_username"))
         except Exception as e:
             raise InternalServerError(f"Failed to register user: {e}")
 

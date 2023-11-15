@@ -1,5 +1,10 @@
+import asyncio
+
 import requests
+from celery import Celery
 from pyppeteer import launch
+
+from app.config.config import Config
 
 
 def fetch_user_info(username: str):
@@ -40,7 +45,11 @@ def fetch_user_info(username: str):
         return None, {}
 
 
-async def main(github_username: str):
+# Create a Celery instance
+app = Celery("tasks", broker=Config.REDIS_SERVER)
+
+
+async def capture_screenshot(github_username: str):
     """
     Takes a screenshot of a GitHub user's profile page in dark mode.
 
@@ -81,7 +90,12 @@ async def main(github_username: str):
     """
     )
 
-    await page.screenshot(
-        {"path": f"{github_username}_dark_mode.png", "fullPage": "true"}
-    )
+    await page.screenshot({"path": f"{github_username}.png", "fullPage": "true"})
     await browser.close()
+
+
+# Define a Celery task
+@app.task
+def async_capture_screenshot(username):
+    loop = asyncio.get_event_loop()
+    return loop.run_until_complete(capture_screenshot(username))
