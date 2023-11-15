@@ -4,7 +4,7 @@ input = document.querySelector('#hashtags');
 container = document.querySelector('.tag-container');
 hashtagArray = [];
 
-input.addEventListener('keyup', () => {
+input.addEventListener('keyup', (event) => {
     if (event.which == 13 && input.value.length > 0) {
       var text = document.createTextNode(input.value);
       var p = document.createElement('p');

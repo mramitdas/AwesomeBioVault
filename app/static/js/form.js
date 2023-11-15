@@ -15,9 +15,18 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
 
   // Convert FormData to JSON
   const formDataObject = {};
+  const tags = document.querySelectorAll(".tag");
+
   formData.forEach((value, key) => {
-    formDataObject[key] = value;
+    if (key === "hashtags") {
+      
+    } else {
+      formDataObject[key] = value;
+    }
   });
+  
+  formDataObject["tags"] = Array.from(tags).map((tag) => tag.textContent);
+  console.log(formDataObject);
 
   // Perform an AJAX request to your API
   fetch("/profile", {
@@ -25,10 +34,10 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(Object.fromEntries(formData)),
+    body: JSON.stringify(formDataObject),
   })
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response.status === 200) {
         // Show the alert on success
         showToast(
