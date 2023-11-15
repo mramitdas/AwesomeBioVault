@@ -27,7 +27,7 @@ async function incrementCounter(id) {
     };
 
     // Make a PATCH request to update the user profile on the server
-    const response = await fetch("/profile/update/", {
+    const response = await fetch("/profile/update", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

@@ -135,7 +135,7 @@
     <!-- add profile form starts here -->
     <div class="modal">
       <div class="modal-container">
-        <form action="#">
+        <form id="myForm">
           <div class="modal-left">
             <h1 class="modal-title">Join Our Community!</h1>
             <p class="modal-desc">Unlock Exclusive Features</p>
@@ -203,9 +203,7 @@
           </div>
         </div>
         <i class="fa-solid fa-xmark close"></i>
-
-        <!-- Remove 'active' class, this is just to show in Codepen thumbnail -->
-        <div class="progress active"></div>
+        <div class="progress"></div>
       </div>
     </div>
     <!-- side pop up alert ends here -->
@@ -215,6 +213,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="{{ url_for('static', filename='js/counter.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/form.js') }}"></script>
     <script src="{{ url_for('static', filename='js/alert.js') }}"></script>
     <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
     <script src="{{ url_for('static', filename='js/hashtag.js') }}"></script>
