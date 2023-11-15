@@ -773,6 +773,7 @@ p {
   justify-content: center;
   background-color: #f4f7ff;
   overflow: hidden;
+  font-family: var(--font-family)
 }
 
 .toast {
@@ -858,7 +859,7 @@ p {
   background-color: var(--alert);
 }
 
-.progress.active:before {
+.toast .progress.active:before {
   animation: progress 5s linear forwards;
 }
 
