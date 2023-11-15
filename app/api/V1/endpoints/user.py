@@ -9,7 +9,7 @@ from werkzeug.exceptions import (
 )
 
 from app.models.user import User as UserModel
-from app.schemas.user import UserIn, UserOut, UserUpdate
+from app.schemas.user import UserIn, UserOut, UserUpdate, UserSearch
 
 from .utils import fetch_user_info
 
@@ -49,9 +49,7 @@ def save_user_profile():
     if request.method == "POST":
         data = request.json
 
-        response_code, response_data = fetch_user_info(
-            username=data.get("username")
-        )
+        response_code, response_data = fetch_user_info(username=data.get("username"))
         if response_code is not None:
             data["full_name"] = response_data.get("name")
             data["github_avatar"] = response_data.get("avatar_url")
@@ -63,13 +61,12 @@ def save_user_profile():
         except ValueError as e:
             raise BadRequest(f"Validation error: {e}")
 
-        user_instance = UserModel()
-
         try:
             user_dict = user_data.model_dump(exclude_unset=False)
         except ValueError as e:
             raise BadRequest(f"Invalid profile data: {e}")
 
+        user_instance = UserModel()
         try:
             response = user_instance.save(data=user_dict)
         except Exception as e:
@@ -172,3 +169,43 @@ def update_user_profile():
 
     # Handle GET request if needed
     abort(MethodNotAllowed.code, description="Unsupported request method")
+
+
+@user.route("/profile/filter", methods=["POST"])
+def filter_user_profile():
+    """
+    Endpoint for filtering user profiles based on provided criteria.
+
+    This endpoint expects a POST request with JSON data containing criteria for filtering user profiles. It validates the input data using the `UserSearch` model and then attempts to filter user profiles using the `UserModel`.
+
+    Args:
+        None (uses request.json): The request payload containing filtering criteria.
+
+    Returns:
+        Flask Response: A JSON response containing the filtered user profiles.
+
+    Raises:
+        BadRequest: If there is a validation error while creating the `UserSearch` instance or if the provided data is invalid.
+        InternalServerError: If there is an error while attempting to filter user profiles.
+
+    Note:
+        This endpoint utilizes the `UserSearch` model for input validation and the `UserModel` for filtering user profiles based on the provided criteria.
+    """
+    if request.method == "POST":
+        data = request.json
+
+        try:
+            user_data = UserSearch(**data)
+        except ValueError as e:
+            raise BadRequest(f"Validation error: {e}")
+
+        try:
+            user_dict = user_data.model_dump(exclude_unset=False)
+        except ValueError as e:
+            raise BadRequest(f"Invalid filter parameter: {e}")
+
+        user_instance = UserModel()
+        try:
+            return user_instance.filter(data=user_dict)
+        except Exception as e:
+            raise InternalServerError(f"Failed to retriev user data: {e}")
