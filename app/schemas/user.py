@@ -101,4 +101,66 @@ class UserOut(BaseUser):
         Attributes:
             from_attributes (bool): Determines whether attribute values should be populated from class attributes when creating an instance of the model. If True, class attributes with the same name as fields in the model will be used to initialize those fields. Defaults to True, enabling attribute initialization from class attributes.
         """
+
+        from_attributes = True
+
+
+class UserUpdate(BaseModel):
+    """
+    Represents a user update model for modifying user data.
+
+    Attributes:
+        github_username (str): The unique identifier for the user whose data is being updated.
+        user_data (BaseUser): An instance of the BaseUser class containing updated user data.
+
+    Note:
+        - Use this class to define the criteria for selecting a user to update and provide the new user data to be applied.
+
+    Configuration Options:
+        - Config.from_attributes (bool): Determines whether attribute values should be populated from class attributes when creating an instance of the model. If True, class attributes with the same name as fields in the model will be used to initialize those fields. Defaults to True, enabling attribute initialization from class attributes.
+    """
+
+    github_username: str
+    user_data: BaseUser
+
+    class Config:
+        """
+        Configuration options for Pydantic models.
+
+        Attributes:
+            from_attributes (bool): Determines whether attribute values should be populated from class attributes when creating an instance of the model. If True, class attributes with the same name as fields in the model will be used to initialize those fields. Defaults to True, enabling attribute initialization from class attributes.
+        """
+
+        from_attributes = True
+
+
+class UserSearch(BaseUser):
+    """
+    Represents a user search model.
+
+    This class inherits attributes and behavior from the `BaseUser` class and is intended to be used for representing user data in output or response objects.
+
+    Attributes:
+        user_uuid (int): The unique identifier for the user.
+        full_name (Optional[str]): The full name of the user, constrained to a maximum length of 50 characters.
+        github_avatar (Optional[str]): The URL of the user's GitHub avatar.
+        github_username (Optional[str]): The GitHub username of the user.
+        profile_views (Optional[int]): The number of profile views for the user.
+        tags (Optional[List[str]]): A list of tags associated with the user.
+
+    Inherits from:
+        BaseUser: The base user model with common attributes.
+
+    Note:
+        This class serves as a specialized version of `BaseUser` specifically designed for representing user data in response objects. It introduces additional attributes: `full_name`, `github_avatar`, `github_username`, `profile_views`, and `tags`.
+    """
+
+    class Config:
+        """
+        Configuration options for Pydantic models.
+
+        Attributes:
+            from_attributes (bool): Determines whether attribute values should be populated from class attributes when creating an instance of the model. If True, class attributes with the same name as fields in the model will be used to initialize those fields. Defaults to True, enabling attribute initialization from class attributes.
+        """
+
         from_attributes = True

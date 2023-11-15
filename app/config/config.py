@@ -40,3 +40,4 @@ class Config:
     DB_URL = os.environ.get("DB_URL")
     DB_NAME = os.environ.get("DB_NAME")
     TABLE_NAME = os.environ.get("PROFILE_TABLE_NAME")
+    REDIS_SERVER = os.environ.get("REDIS_SERVER")

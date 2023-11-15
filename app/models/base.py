@@ -37,7 +37,7 @@ class Base:
 
         self.__db_url = Config.DB_URL
         self.__db_name = Config.DB_NAME
-        self.__table_name = Config.TABLE_NAME
+        self.__table_name = table_name
         self.__db = DataBase(db_url=self.__db_url)
 
     def save(self, data: dict) -> str:
@@ -54,12 +54,12 @@ class Base:
             db_name=self.__db_name, table_name=self.__table_name, data=data
         )
 
-    def get(self, uuid: int) -> dict:
+    def get(self, username: int) -> dict:
         """
         Retrieves data by data ID from the database table.
 
         Args:
-            uuid (int): The UUID for identifying the user.
+            github_username (str): The github_username for identifying the user.
 
         Returns:
             dict: The data retrieved from the database.
@@ -67,7 +67,7 @@ class Base:
         return self.__db.query(
             db_name=self.__db_name,
             table_name=self.__table_name,
-            filter={"user_uuid": uuid},
+            filter={"github_username": username},
         )
 
     def get_all(self) -> list[dict]:

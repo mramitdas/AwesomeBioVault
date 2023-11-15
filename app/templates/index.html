@@ -19,7 +19,7 @@
   <body>
     <!-- Side navigation bar starts here -->
     <div id="nav-bar">
-      <input id="nav-toggle" type="checkbox" checked="false"/>
+      <input id="nav-toggle" type="checkbox" checked="false" />
       <div id="nav-header">
         <a
           id="nav-title"
@@ -69,15 +69,19 @@
           <div id="nav-footer-titlebox">
             <a
               id="nav-footer-title"
-              href="https://codepen.io/uahnbu/pens/public"
+              href="https://github.com/mramitdas"
               target="_blank"
-              >mramitdas</a
-            ><span id="nav-footer-subtitle">Developer</span>
+              >Amit Das</a
+            ><span id="nav-footer-subtitle">Software Developer Eng. II</span>
           </div>
           <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
         </div>
         <div id="nav-footer-content">
-          <Lorem>description to be added.</Lorem>
+          <p>
+            ❤️ Python<br />
+            Passionate about orchestrating end-to-end projects, integrating
+            seamlessly across diverse frameworks.
+          </p>
         </div>
       </div>
     </div>
@@ -88,7 +92,12 @@
       <ul class="cards">
         {% for profile in data %}
         <li class="card_container">
-          <a href="https://github.com/{{ profile.github_username }}" target="_blank" onclick="incrementCounter('{{ profile.github_username }}')" class="card">
+          <a
+            href="https://github.com/{{ profile.github_username }}"
+            target="_blank"
+            onclick="incrementCounter('{{ profile.github_username }}')"
+            class="card"
+          >
             <img
               src="{{ url_for('static', filename='images/1.png') }}"
               class="card__image"
@@ -106,7 +115,12 @@
                 />
                 <div class="card__header-text">
                   <h3 class="card__title">{{ profile.full_name }}</h3>
-                  <span class="card__status"><span id="counter{{ profile.github_username }}">{{ profile.profile_views }}</span> views</span>
+                  <span class="card__status"
+                    ><span id="counter{{ profile.github_username }}"
+                      >{{ profile.profile_views }}</span
+                    >
+                    views</span
+                  >
                 </div>
               </div>
               <p class="card__description">{{ profile.tags }}</p>
@@ -121,7 +135,7 @@
     <!-- add profile form starts here -->
     <div class="modal">
       <div class="modal-container">
-        <form action="/profile/" method="POST">
+        <form id="myForm">
           <div class="modal-left">
             <h1 class="modal-title">Join Our Community!</h1>
             <p class="modal-desc">Unlock Exclusive Features</p>
@@ -135,11 +149,11 @@
               />
             </div>
             <div class="input-block">
-              <label for="username" class="input-label">Username</label>
+              <label for="github_username" class="input-label">Username</label>
               <input
                 type="text"
-                name="username"
-                id="username"
+                name="github_username"
+                id="github_username"
                 placeholder="mramitdas"
               />
             </div>
@@ -175,14 +189,32 @@
         </button>
       </div>
     </div>
-
     <!-- add profile form ends here -->
+
+    <!-- side pop up alert starts here -->
+    <div class="alert">
+      <div class="toast">
+        <div class="toast-content">
+          <i id="alert-icon" class="fas fa-solid fa-check check"></i>
+
+          <div class="message">
+            <span id="alert-title" class="text text-1">Success</span>
+            <span id="alert-description" class="text text-2">Your changes has been saved</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-xmark close"></i>
+        <div class="progress"></div>
+      </div>
+    </div>
+    <!-- side pop up alert ends here -->
 
     <script
       src="https://kit.fontawesome.com/5f6c2c687e.js"
       crossorigin="anonymous"
     ></script>
     <script src="{{ url_for('static', filename='js/counter.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/form.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/alert.js') }}"></script>
     <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
     <script src="{{ url_for('static', filename='js/hashtag.js') }}"></script>
   </body>
