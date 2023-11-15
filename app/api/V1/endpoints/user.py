@@ -16,7 +16,7 @@ from .utils import fetch_user_info
 user = Blueprint("user", __name__)
 
 
-@user.route("profile/", methods=["POST"])
+@user.route("/profile", methods=["POST"])
 def save_user_profile():
     """
     Save user profile information.
@@ -34,7 +34,7 @@ def save_user_profile():
         MethodNotAllowed: If the HTTP method is not POST.
 
     Example:
-        To save a user's profile, send a POST request to the /profile/ endpoint with the required data in the request form.
+        To save a user's profile, send a POST request to the /profile endpoint with the required data in the request json.
         The expected data includes 'email' and 'github_username'. Optional data such as 'full_name', 'github_avatar', and 'tags'
         may be retrieved from the GitHub API if the 'github_username' is provided.
 
@@ -47,18 +47,16 @@ def save_user_profile():
         - Implement handling of GET requests if required.
     """
     if request.method == "POST":
-        data = {
-            "email": request.form.get("email"),
-            "github_username": request.form.get("username"),
-            # "tags": request.form.get('hashtags')
-        }
+        data = request.json
 
         response_code, response_data = fetch_user_info(
-            username=request.form.get("username")
+            username=data.get("username")
         )
         if response_code is not None:
             data["full_name"] = response_data.get("name")
             data["github_avatar"] = response_data.get("avatar_url")
+        else:
+            raise NotFound("Invalid Github username")
 
         try:
             user_data = UserIn(**data)
@@ -78,7 +76,7 @@ def save_user_profile():
             raise InternalServerError(f"Failed to register user: {e}")
 
         if response.acknowledged:
-            return redirect(url_for("user.get_user_profiles"))
+            return {"status": "success", "message": "Profile added successfully"}
 
         return {"status": "failure", "message": "Profile registration failed"}
 
@@ -122,7 +120,7 @@ def get_user_profiles() -> List[UserOut]:
     return render_template("index.html", data=data)
 
 
-@user.route("/profile/update/", methods=["PATCH"])
+@user.route("/profile/update", methods=["PATCH"])
 def update_user_profile():
     """
     Update user profile information.
