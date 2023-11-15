@@ -203,12 +203,12 @@ def filter_user_profile():
             raise BadRequest(f"Validation error: {e}")
 
         try:
-            user_dict = user_data.model_dump(exclude_unset=False)
+            user_dict = user_data.model_dump(exclude_unset=True)
         except ValueError as e:
             raise BadRequest(f"Invalid filter parameter: {e}")
 
         user_instance = UserModel()
         try:
-            return user_instance.filter(data=user_dict)
+            return user_instance.filter(filter=user_dict)
         except Exception as e:
             raise InternalServerError(f"Failed to retriev user data: {e}")
