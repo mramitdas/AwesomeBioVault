@@ -6,6 +6,7 @@ from werkzeug.exceptions import (
     InternalServerError,
     MethodNotAllowed,
     NotFound,
+    Conflict
 )
 from .utils import async_capture_screenshot, fetch_user_info
 
@@ -67,8 +68,13 @@ def save_user_profile():
             user_dict = user_data.model_dump(exclude_unset=False)
         except ValueError as e:
             raise BadRequest(f"Invalid profile data: {e}")
-
+            
         user_instance = UserModel()
+                
+        exist_users_list = user_instance.filter(filter={"github_username": user_dict.get("github_username")})
+        if len(exist_users_list) > 0:
+            raise Conflict("User with this username already exists")
+        
         try:
             response = user_instance.save(data=user_dict)
             async_capture_screenshot.delay(data.get("github_username"))
