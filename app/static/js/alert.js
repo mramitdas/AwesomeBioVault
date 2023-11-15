@@ -1,39 +1,45 @@
-const button = document.querySelector(".modal-buttons"),
-  toast = document.querySelector(".toast"),
-  closeIcon = document.querySelector(".close"),
-  progress = document.querySelector(".progress");
+function showToast(title, description, colorVariable, alertIcon) {
+  const toast = document.querySelector(".toast"),
+    toastContent = document.querySelector(".toast-content"),
+    progress = document.querySelector(".progress"),
+    iconElement = document.getElementById("alert-icon"),
+    alerTitle =  document.getElementById("alert-title"),
+    alerDescription =  document.getElementById("alert-description");
 
-let timer1, timer2;
+  // Initially hide the toast and progress
+  toast.classList.remove("active");
+  progress.classList.remove("active");
 
-// Initially hide the toast and progress
-toast.classList.remove("active");
-progress.classList.remove("active");
-
-button.addEventListener("click", () => {
-  // Show the toast and progress when the button is clicked
+  // Show the toast and progress
   toast.classList.add("active");
   progress.classList.add("active");
 
+  // Set a custom color for the progress element using a CSS variable
+  progress.style.setProperty("--alert", `var(${colorVariable})`);
+  toastContent.style.setProperty("--alert", `var(${colorVariable})`);
+  iconElement.classList.replace("fa-check", alertIcon);
+
+  alerTitle.textContent = title;
+  alerDescription.textContent = description
+
   // Set timers to hide the toast and progress after a certain time
-  timer1 = setTimeout(() => {
+  const timer1 = setTimeout(() => {
     toast.classList.remove("active");
   }, 5000); // 5 seconds
 
-  timer2 = setTimeout(() => {
+  const timer2 = setTimeout(() => {
     progress.classList.remove("active");
   }, 5300); // 5.3 seconds
-});
 
-closeIcon.addEventListener("click", () => {
-  // Hide the toast and progress when the close icon is clicked
-  toast.classList.remove("active");
-
-  // Use a setTimeout to delay hiding the progress for a smoother transition
-  setTimeout(() => {
+  // Function to clear the timers and hide the toast and progress
+  const hideToast = () => {
+    clearTimeout(timer1);
+    clearTimeout(timer2);
+    toast.classList.remove("active");
     progress.classList.remove("active");
-  }, 300);
+  };
 
-  // Clear the timers to prevent the automatic hiding
-  clearTimeout(timer1);
-  clearTimeout(timer2);
-});
+  // Attach the hideToast function to the close icon click event
+  const closeIcon = document.querySelector(".close");
+  closeIcon.addEventListener("click", hideToast);
+}

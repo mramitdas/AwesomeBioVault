@@ -9,6 +9,7 @@
   --surface-color: #30305a;
   --curve: 40;
   --font-family: Verdana, Geneva, Tahoma, sans-serif;
+  --alert: #0e4bf1;
   --success: #04AA6D;
   --failure: #f44336;
   --warning: #ff9800;
@@ -802,7 +803,7 @@ p {
   justify-content: center;
   height: 35px;
   min-width: 35px;
-  background-color: var(--success);
+  background-color: var(--alert);
   color: #fff;
   font-size: 20px;
   border-radius: 50%;
@@ -854,7 +855,7 @@ p {
   right: 0;
   height: 100%;
   width: 100%;
-  background-color: var(--success);
+  background-color: var(--alert);
 }
 
 .progress.active:before {
