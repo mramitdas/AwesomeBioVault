@@ -1,3 +1,15 @@
+/**
+ * Display a toast notification with custom content and styling.
+ *
+ * This function shows a toast notification with a specified title, description,
+ * color, and icon. The toast includes a progress element and is set to automatically
+ * hide after a certain time. It also provides a close button to manually hide the toast.
+ *
+ * @param {string} title - The title of the toast notification.
+ * @param {string} description - The description or content of the toast notification.
+ * @param {string} colorVariable - The CSS variable representing the custom color for the toast.
+ * @param {string} alertIcon - The class name of the icon to display in the toast.
+ */
 function showToast(title, description, colorVariable, alertIcon) {
   const toast = document.querySelector(".toast"),
     toastContent = document.querySelector(".toast-content"),
@@ -5,10 +17,6 @@ function showToast(title, description, colorVariable, alertIcon) {
     iconElement = document.getElementById("alert-icon"),
     alerTitle =  document.getElementById("alert-title"),
     alerDescription =  document.getElementById("alert-description");
-
-  // Initially hide the toast and progress
-  toast.classList.remove("active");
-  progress.classList.remove("active");
 
   // Show the toast and progress
   toast.classList.add("active");
@@ -20,7 +28,7 @@ function showToast(title, description, colorVariable, alertIcon) {
   iconElement.classList.replace("fa-check", alertIcon);
 
   alerTitle.textContent = title;
-  alerDescription.textContent = description
+  alerDescription.textContent = description;
 
   // Set timers to hide the toast and progress after a certain time
   const timer1 = setTimeout(() => {
