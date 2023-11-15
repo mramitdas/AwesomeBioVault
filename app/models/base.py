@@ -37,7 +37,7 @@ class Base:
 
         self.__db_url = Config.DB_URL
         self.__db_name = Config.DB_NAME
-        self.__table_name = Config.TABLE_NAME
+        self.__table_name = table_name
         self.__db = DataBase(db_url=self.__db_url)
 
     def save(self, data: dict) -> str:

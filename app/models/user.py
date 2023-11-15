@@ -1,3 +1,5 @@
+from app.config.config import Config
+
 from .base import Base
 
 
@@ -27,4 +29,4 @@ class User(Base):
         Args:
             None
         """
-        super().__init__(table_name="PROFILE_TABLE_NAME")
+        super().__init__(table_name=Config.TABLE_NAME)
