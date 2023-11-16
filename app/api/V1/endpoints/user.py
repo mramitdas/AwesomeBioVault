@@ -150,15 +150,13 @@ def update_user_profile():
         except ValueError as e:
             raise BadRequest(f"Validation error: {e}")
 
-        user_instance = UserModel()
-
         try:
             user_dict = user_data.model_dump(exclude_unset=True)
         except ValueError as e:
             raise BadRequest(f"Invalid user data: {e}")
 
+        user_instance = UserModel()
         try:
-            user_instance = UserModel()
             user_data = user_instance.get(username=user_dict["github_username"])
         except Exception as e:
             raise InternalServerError(f"Failed to retrieve user data: {e}")
