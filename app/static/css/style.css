@@ -10,7 +10,7 @@
   --curve: 40;
   --font-family: Verdana, Geneva, Tahoma, sans-serif;
   --alert: #0e4bf1;
-  --success: #04AA6D;
+  --success: #04aa6d;
   --failure: #f44336;
   --warning: #ff9800;
 }
@@ -75,12 +75,12 @@ body {
   pointer-events: none;
 }
 
-#nav-toggle ~ #nav-footer #nav-footer-titlebox{
+#nav-toggle ~ #nav-footer #nav-footer-titlebox {
   width: 30%;
 }
 
 #nav-toggle:checked ~ #nav-footer #nav-footer-titlebox,
-#nav-toggle:checked ~ #nav-footer #nav-footer-subtitle{
+#nav-toggle:checked ~ #nav-footer #nav-footer-subtitle {
   color: transparent;
 }
 
@@ -449,6 +449,7 @@ label[for="nav-footer-toggle"] {
   width: 100%;
   height: auto;
   transition: 2s ease-in-out;
+  color: transparent;
 }
 
 .card .card__image:hover {
@@ -773,7 +774,7 @@ p {
   justify-content: center;
   background-color: #f4f7ff;
   overflow: hidden;
-  font-family: var(--font-family)
+  font-family: var(--font-family);
 }
 
 .toast {
@@ -846,7 +847,6 @@ p {
   left: 0;
   height: 3px;
   width: 100%;
-
 }
 
 .toast .progress:before {
