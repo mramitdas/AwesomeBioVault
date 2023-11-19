@@ -1,4 +1,4 @@
-# Code of Conduct - Core-Craft (Backend)
+# Code of Conduct
 
 ## Our Pledge
 
