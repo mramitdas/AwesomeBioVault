@@ -33,6 +33,8 @@ class Config:
     TABLE_NAME = os.environ.get("PROFILE_TABLE_NAME")
     REDIS_SERVER = os.environ.get("REDIS_SERVER")
 
+    PUPPETEER_EXECUTABLE_PATH = os.environ.get("PUPPETEER_EXECUTABLE_PATH")
+    
     GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
     REPO_OWNER = os.environ.get("REPO_OWNER")
     REPO_NAME = os.environ.get("REPO_NAME")
