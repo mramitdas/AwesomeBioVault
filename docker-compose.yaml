@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: gunicorn -w 4 -b 0.0.0.0:5001 app.app:app
+    volumes:
+      - .:/AwesomeBioVault
+    ports:
+      - "5001:5001"
+    depends_on:
+      - redis
+      - mongo
+      - celery
+
+  celery:
+    build: .
+    command: celery -A app.api.V1.endpoints.utils worker --loglevel=info
+    volumes:
+      - .:/AwesomeBioVault
+    depends_on:
+      - redis
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+
+  mongo:
+    image: "mongo:latest"
+    ports:
+      - "27017:27017"
