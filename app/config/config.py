@@ -7,33 +7,24 @@ class Config:
     """
     Configuration class for handling environment variables and settings.
 
+    This class encapsulates configuration variables used in the application.
+    It uses the `python-dotenv` library to load environment variables from a .env
+    file in the project root directory.
+
     Attributes:
-    - DB_URL (str): The URL for connecting to the database.
-    - DB_NAME (str): The name of the database.
-    - TABLE_NAME (str): The name of the table within the database.
+        - DB_URL (str): The URL for connecting to the database.
+        - DB_NAME (str): The name of the database.
+        - TABLE_NAME (str): The name of the table within the database.
+        - REDIS_SERVER (str): The URL or IP address of the Redis server.
+        - GITHUB_TOKEN (str): GitHub personal access token with the necessary permissions.
+        - REPO_OWNER (str): Owner of the GitHub repository.
+        - REPO_NAME (str): Name of the GitHub repository.
+        - BRANCH (str): Default branch for GitHub operations.
 
     Note:
-    This class uses the `python-dotenv` library to load environment variables
-    from a .env file in the project root directory.
+        Ensure that you have a .env file in the project root directory with the
+        required environment variables.
 
-    Example:
-    ```
-    # .env file
-    DB_URL=your_database_url
-    DB_NAME=your_database_name
-    TABLE_NAME=your_table_name
-    ```
-
-    Usage:
-    ```
-    # Import the Config class in your application
-    from your_module import Config
-
-    # Access configuration variables
-    db_url = Config.DB_URL
-    db_name = Config.DB_NAME
-    table_name = Config.TABLE_NAME
-    ```
     """
 
     load_dotenv()
@@ -41,3 +32,10 @@ class Config:
     DB_NAME = os.environ.get("DB_NAME")
     TABLE_NAME = os.environ.get("PROFILE_TABLE_NAME")
     REDIS_SERVER = os.environ.get("REDIS_SERVER")
+
+    PUPPETEER_EXECUTABLE_PATH = os.environ.get("PUPPETEER_EXECUTABLE_PATH")
+    
+    GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+    REPO_OWNER = os.environ.get("REPO_OWNER")
+    REPO_NAME = os.environ.get("REPO_NAME")
+    BRANCH = os.environ.get("BRANCH")

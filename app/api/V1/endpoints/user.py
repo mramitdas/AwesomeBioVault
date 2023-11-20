@@ -3,16 +3,17 @@ from typing import List
 from flask import Blueprint, abort, redirect, render_template, request, url_for
 from werkzeug.exceptions import (
     BadRequest,
+    Conflict,
     InternalServerError,
     MethodNotAllowed,
     NotFound,
-    Conflict
 )
-from .utils import async_capture_screenshot, fetch_user_info
 
+from app.config.config import Config
 from app.models.user import User as UserModel
 from app.schemas.user import UserIn, UserOut, UserSearch, UserUpdate
 
+from .utils import async_capture_screenshot, fetch_user_info
 
 user = Blueprint("user", __name__)
 
@@ -68,13 +69,15 @@ def save_user_profile():
             user_dict = user_data.model_dump(exclude_unset=False)
         except ValueError as e:
             raise BadRequest(f"Invalid profile data: {e}")
-            
+
         user_instance = UserModel()
-                
-        exist_users_list = user_instance.filter(filter={"github_username": user_dict.get("github_username")})
+
+        exist_users_list = user_instance.filter(
+            filter={"github_username": user_dict.get("github_username")}
+        )
         if len(exist_users_list) > 0:
             raise Conflict("User with this username already exists")
-        
+
         try:
             response = user_instance.save(data=user_dict)
             async_capture_screenshot.delay(data.get("github_username"))
@@ -122,8 +125,11 @@ def get_user_profiles() -> List[UserOut]:
 
     # Serialize the list of user_data using the UserOut schema
     data = [UserOut(**user).model_dump() for user in user_data]
-
-    return render_template("index.html", data=data)
+    
+    for user in data:
+        user["tags"] = " ".join(user["tags"]) if user["tags"] else "No Hastags found"
+    
+    return render_template("index.html", data=data, branch=Config.BRANCH)
 
 
 @user.route("/profile/update", methods=["PATCH"])
@@ -150,15 +156,13 @@ def update_user_profile():
         except ValueError as e:
             raise BadRequest(f"Validation error: {e}")
 
-        user_instance = UserModel()
-
         try:
             user_dict = user_data.model_dump(exclude_unset=True)
         except ValueError as e:
             raise BadRequest(f"Invalid user data: {e}")
 
+        user_instance = UserModel()
         try:
-            user_instance = UserModel()
             user_data = user_instance.get(username=user_dict["github_username"])
         except Exception as e:
             raise InternalServerError(f"Failed to retrieve user data: {e}")

@@ -99,9 +99,11 @@
             class="card"
           >
             <img
-              src="{{ url_for('static', filename='images/1.png') }}"
+              src="https://raw.githubusercontent.com/mramitdas/AwesomeBioVault/{{ branch }}/app/static/profiles/{{ profile.github_username }}.png"
               class="card__image"
               alt="mramitdas"
+              preload="auto"
+              loading="lazy"
             />
             <div class="card__overlay">
               <div class="card__header">
@@ -199,7 +201,9 @@
 
           <div class="message">
             <span id="alert-title" class="text text-1">Success</span>
-            <span id="alert-description" class="text text-2">Your changes has been saved</span>
+            <span id="alert-description" class="text text-2"
+              >Your changes has been saved</span
+            >
           </div>
         </div>
         <i class="fa-solid fa-xmark close"></i>
