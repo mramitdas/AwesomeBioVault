@@ -11,13 +11,14 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Set up Docker
-        uses: docker/setup-docker@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Build and push
+        uses: docker/build-push-action@v5
         with:
-          dockerfile: Dockerfile
           context: .
-
-      - name: Build and run Docker Compose
-        run: docker-compose up -d
+          file: ./Dockerfile
