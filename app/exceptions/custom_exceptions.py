@@ -14,4 +14,5 @@ class MissingAttributeError(Exception):
     Note:
         You can raise this exception with an informative error message to provide details about the missing attribute.
     """
+
     pass

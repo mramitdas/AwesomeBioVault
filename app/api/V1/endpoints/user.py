@@ -125,10 +125,10 @@ def get_user_profiles() -> List[UserOut]:
 
     # Serialize the list of user_data using the UserOut schema
     data = [UserOut(**user).model_dump() for user in user_data]
-    
+
     for user in data:
         user["tags"] = " ".join(user["tags"]) if user["tags"] else "No Hastags found"
-    
+
     return render_template("index.html", data=data, branch=Config.BRANCH)
 
 

@@ -216,9 +216,13 @@ class DataBase:
         update = {"$set": data["user_data"]}
 
         if bulk:
-            response = dataset.update_many({"github_username": data["github_username"]}, update)
+            response = dataset.update_many(
+                {"github_username": data["github_username"]}, update
+            )
         else:
-            response = dataset.update_one({"github_username": data["github_username"]}, update)
+            response = dataset.update_one(
+                {"github_username": data["github_username"]}, update
+            )
 
         return response
 
