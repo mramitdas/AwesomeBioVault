@@ -92,19 +92,21 @@
       <ul class="cards">
         {% for profile in data %}
         <li class="card_container">
-          <a
-            href="https://github.com/{{ profile.github_username }}"
-            target="_blank"
-            onclick="incrementCounter('{{ profile.github_username }}')"
-            class="card"
-          >
-            <img
-              src="https://raw.githubusercontent.com/mramitdas/AwesomeBioVault/{{ branch }}/app/static/profiles/{{ profile.github_username }}.png"
-              class="card__image"
-              alt="mramitdas"
-              preload="auto"
-              loading="lazy"
-            />
+          <div class="card">
+            <a
+              href="https://github.com/{{ profile.github_username }}"
+              target="_blank"
+              onclick="incrementCounter('{{ profile.github_username }}')"
+              class="card"
+            >
+              <img
+                src="https://raw.githubusercontent.com/mramitdas/AwesomeBioVault/{{ branch }}/app/static/profiles/{{ profile.github_username }}.png"
+                class="card__image"
+                alt="mramitdas"
+                preload="auto"
+                loading="lazy"
+              />
+            </a>
             <div class="card__overlay">
               <div class="card__header">
                 <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
@@ -124,10 +126,13 @@
                     views</span
                   >
                 </div>
+                <div class="stage">
+                  <div class="heart"></div>
+                </div>
               </div>
               <p class="card__description">{{ profile.tags }}</p>
             </div>
-          </a>
+          </div>
         </li>
         {% endfor %}
       </ul>
@@ -151,7 +156,9 @@
               />
             </div>
             <div class="input-block">
-              <label for="github_username" class="input-label">Github Username</label>
+              <label for="github_username" class="input-label"
+                >Github Username</label
+              >
               <input
                 type="text"
                 name="github_username"
@@ -216,8 +223,12 @@
       src="https://kit.fontawesome.com/5f6c2c687e.js"
       crossorigin="anonymous"
     ></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Your JavaScript code -->
+    <script src="{{ url_for('static', filename='js/like.js') }}"></script>
     <script src="{{ url_for('static', filename='js/counter.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/form.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='js/form.js') }}"></script> -->
     <script src="{{ url_for('static', filename='js/alert.js') }}"></script>
     <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
     <script src="{{ url_for('static', filename='js/hashtag.js') }}"></script>
