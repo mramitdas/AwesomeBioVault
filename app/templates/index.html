@@ -93,6 +93,19 @@
         {% for profile in data %}
         <li class="card_container">
           <div class="card">
+            <!-- LOADING DOTS starts here -->
+            <script src="{{ url_for('static', filename='js/loader.js') }}"></script>
+            <div class="loader{{ profile.github_username }}">
+              <div class="spinner-box">
+                <div class="pulse-container">
+                  <div class="pulse-bubble pulse-bubble-1"></div>
+                  <div class="pulse-bubble pulse-bubble-2"></div>
+                  <div class="pulse-bubble pulse-bubble-3"></div>
+                </div>
+              </div>
+            </div>
+            <!-- LOADING DOTS ends here -->
+
             <a
               href="https://github.com/{{ profile.github_username }}"
               target="_blank"
@@ -100,11 +113,13 @@
               class="card"
             >
               <img
+                id="loadedImage{{ profile.github_username }}"
                 src="https://raw.githubusercontent.com/mramitdas/AwesomeBioVault/{{ branch }}/app/static/profiles/{{ profile.github_username }}.png"
                 class="card__image"
                 alt="mramitdas"
                 preload="auto"
                 loading="lazy"
+                onload="imageLoaded('{{ profile.github_username }}')"
               />
             </a>
             <div class="card__overlay">
@@ -228,7 +243,7 @@
     <!-- Your JavaScript code -->
     <script src="{{ url_for('static', filename='js/like.js') }}"></script>
     <script src="{{ url_for('static', filename='js/counter.js') }}"></script>
-    <!-- <script src="{{ url_for('static', filename='js/form.js') }}"></script> -->
+    <script src="{{ url_for('static', filename='js/form.js') }}"></script>
     <script src="{{ url_for('static', filename='js/alert.js') }}"></script>
     <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
     <script src="{{ url_for('static', filename='js/hashtag.js') }}"></script>
