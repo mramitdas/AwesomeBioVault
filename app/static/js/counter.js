@@ -21,10 +21,16 @@ async function incrementCounter(element, id) {
     // Prepare data for server update
     let requestData = {
       github_username: id,
-      user_data: {
-        profile_views: count,
-      },
+      user_data: {},
     };
+
+    if (element === 'counter') {
+      requestData.user_data.profile_views = count; 
+    } else if (element === 'likes') {
+      requestData.user_data.profile_likes = count; 
+    } else {
+      console.log("code broke while appending json with counter")
+    }
 
     // Make a PATCH request to update the user profile on the server
     const response = await fetch("/profile/update", {

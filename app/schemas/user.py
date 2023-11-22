@@ -23,6 +23,7 @@ class BaseUser(BaseModel):
     github_avatar: str | None = None
     tags: list | None = None
     profile_views: int | None = 0
+    profile_likes: int | None = 0
 
     class Config:
         """
