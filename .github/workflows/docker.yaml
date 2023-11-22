@@ -1,28 +1,28 @@
-name: Docker
+# name: Docker
 
-on:
-  push:
-    branches:
-      - dev
+# on:
+#   push:
+#     branches:
+#       - dev
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
 
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+#       -
+#         name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v3
       
-      -
-        name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
+#       -
+#         name: Build and push
+#         uses: docker/build-push-action@v5
+#         with:
+#           context: .
+#           file: ./Dockerfile
       
-      - name: Build and run Docker Compose
-        run: docker-compose up -d
+#       - name: Build and run Docker Compose
+#         run: docker-compose up -d
