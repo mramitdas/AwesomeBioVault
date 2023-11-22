@@ -1,5 +1,6 @@
 $(function () {
-    $(".heart").on("click", function () {
-      $(this).toggleClass("is-active");
-    });
+  $(".heart").on("click", async function () {
+    // Toggle the "is-active" class
+    $(this).toggleClass("is-active");
   });
+});

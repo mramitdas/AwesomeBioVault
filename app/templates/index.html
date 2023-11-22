@@ -109,7 +109,7 @@
             <a
               href="https://github.com/{{ profile.github_username }}"
               target="_blank"
-              onclick="incrementCounter('{{ profile.github_username }}')"
+              onclick="incrementCounter('counter', '{{ profile.github_username }}')"
               class="card"
             >
               <img
@@ -138,10 +138,17 @@
                     ><span id="counter{{ profile.github_username }}"
                       >{{ profile.profile_views }}</span
                     >
-                    views</span
+                    views &
+                    <span id="likes{{ profile.github_username }}"
+                      >{{ profile.profile_likes }}</span
+                    >
+                    likes</span
                   >
                 </div>
-                <div class="stage">
+                <div
+                  class="stage"
+                  onclick="incrementCounter('likes', '{{ profile.github_username }}')"
+                >
                   <div class="heart"></div>
                 </div>
               </div>

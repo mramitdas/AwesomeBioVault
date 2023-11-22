@@ -11,10 +11,10 @@
  * // Increment the counter for user with id 'mramitdas'
  * incrementCounter('mramitdas');
  */
-async function incrementCounter(id) {
+async function incrementCounter(element, id) {
   try {
     // Get the counter element and increment the count
-    let counterElement = document.getElementById("counter" + String(id));
+    let counterElement = document.getElementById(element + String(id));
     let count = parseInt(counterElement.innerText) + 1;
     counterElement.innerText = count;
 
