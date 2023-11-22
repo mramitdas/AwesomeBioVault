@@ -88,7 +88,9 @@ async def capture_screenshot(github_username: str):
     Example:
         >>> capture_screenshot('mramitdas')
     """
-    browser = await launch(executablePath=Config.PUPPETEER_EXECUTABLE_PATH, args=['--no-sandbox'])
+    browser = await launch(
+        executablePath=Config.PUPPETEER_EXECUTABLE_PATH, args=["--no-sandbox"]
+    )
     page = await browser.newPage()
 
     # Emulate desktop environment
@@ -99,7 +101,9 @@ async def capture_screenshot(github_username: str):
         }
     )
 
-    await page.goto(f"https://github.com/{github_username}", {'waitUntil': 'domcontentloaded'})
+    await page.goto(
+        f"https://github.com/{github_username}", {"waitUntil": "domcontentloaded"}
+    )
 
     # Inject JavaScript code to enable dark mode
     await page.evaluate(

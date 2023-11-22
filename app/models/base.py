@@ -1,5 +1,6 @@
 from app.config.config import Config
 from app.db.base import DataBase
+from typing import Union
 
 
 class Base:
@@ -83,7 +84,7 @@ class Base:
             )
         )
 
-    def filter(self, filter: dict) -> list[dict]:
+    def filter(self, filter: Union[dict, str]) -> list[dict]:
         """
         Retrieves data based on filter criteria from the database table.
 
@@ -93,6 +94,41 @@ class Base:
         Returns:
             list[dict]: A list of data that matches the filter criteria.
         """
+        if type(filter) == str:
+            if filter == "trending":
+                aggregate_pipeline = [{"$sort": {"profile_views": -1}}]
+            elif filter == "popular":
+                aggregate_pipeline = [{"$sort": {"profile_likes": -1}}]
+            elif filter == "hot":
+                aggregate_pipeline = [
+                    {
+                        "$addFields": {
+                            "combined_score": {
+                                "$sqrt": {
+                                    "$multiply": ["$profile_likes", "$profile_views"]
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "$sort": {
+                            "combined_score": -1  # Sort in descending order (greater to smaller scores)
+                        }
+                    },
+                ]
+
+            aggregate_pipeline.append(
+                {"$project": {"_id": 0, "email": 0, "password": 0}},
+            )
+
+            return list(
+                self.__db.query(
+                    db_name=self.__db_name,
+                    table_name=self.__table_name,
+                    pipeline=aggregate_pipeline,
+                )
+            )
+
         return list(
             self.__db.query(
                 db_name=self.__db_name,

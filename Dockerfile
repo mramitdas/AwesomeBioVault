@@ -32,9 +32,6 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 # Install any needed packages specified in requirements.txt
 RUN pip3 install --no-cache-dir -r requirements/prod.txt
 
-# Copy the .env file into the container at /AwesomeBioVault
-COPY .env /AwesomeBioVault
-
 # Expose Redis default port
 EXPOSE 6379
 

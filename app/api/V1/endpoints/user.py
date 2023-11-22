@@ -125,10 +125,10 @@ def get_user_profiles() -> List[UserOut]:
 
     # Serialize the list of user_data using the UserOut schema
     data = [UserOut(**user).model_dump() for user in user_data]
-    
+
     for user in data:
         user["tags"] = " ".join(user["tags"]) if user["tags"] else "No Hastags found"
-    
+
     return render_template("index.html", data=data, branch=Config.BRANCH)
 
 
@@ -184,7 +184,7 @@ def update_user_profile():
     abort(MethodNotAllowed.code, description="Unsupported request method")
 
 
-@user.route("/profile/filter", methods=["POST"])
+@user.route("/profile/filter", methods=["POST", "GET"])
 def filter_user_profile():
     """
     Endpoint for filtering user profiles based on provided criteria.
@@ -204,7 +204,28 @@ def filter_user_profile():
     Note:
         This endpoint utilizes the `UserSearch` model for input validation and the `UserModel` for filtering user profiles based on the provided criteria.
     """
-    if request.method == "POST":
+    if request.method == "GET":
+        filter_type = request.args.get("type")
+        user_instance = UserModel()
+        try:
+            user_data = user_instance.filter(filter=filter_type)
+        except Exception as e:
+            raise InternalServerError(f"Failed to retriev user data: {e}")
+
+        if not user_data:
+            raise NotFound("No users found")
+
+        # Serialize the list of user_data using the UserOut schema
+        data = [UserOut(**user).model_dump() for user in user_data]
+
+        for user in data:
+            user["tags"] = (
+                " ".join(user["tags"]) if user["tags"] else "No Hastags found"
+            )
+
+        return render_template("index.html", data=data, branch=Config.BRANCH)
+
+    elif request.method == "POST":
         data = request.json
 
         try:

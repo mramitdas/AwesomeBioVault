@@ -8,14 +8,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="icon"
-      href="{{ url_for('static', filename='images/favicon.png') }}"
+      href="{{ url_for('static', filename='images/favicon.ico') }}"
       type="image/x-icon"
     />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
-  </head>
+    <script>
+      // Define a global variable to hold the base URL and the endpoint
+      var appData = {
+          baseUrl: "{{ url_for('static', filename='') }}",
+          userProfilesEndpoint: "{{ url_for('user.get_user_profiles') }}",
+          userProfilesFilter: "{{ url_for('user.filter_user_profile') }}"
+      };
+  </script>
+</head>
   <body>
     <!-- Side navigation bar starts here -->
     <div id="nav-bar">
@@ -31,7 +39,7 @@
         <hr />
       </div>
       <div id="nav-content">
-        <div class="nav-button">
+        <div class="nav-button" onclick="navigateToHomePage()">
           <i class="fas fa-solid fa-house"></i><span>Home</span>
         </div>
         <!-- <div class="nav-button"><i class="fas fa-images"></i><span>Assets</span></div> -->
@@ -39,19 +47,19 @@
           <i class="fas fa-thumbtack"></i><span>Pinned Items</span>
         </div>
         <hr />
-        <div class="nav-button">
+        <div class="nav-button" onclick="navigateToProfileSearch('latest')">
           <i class="fas fa-regular fa-clock"></i><span>Latest</span>
         </div>
-        <div class="nav-button">
+        <div class="nav-button" onclick="navigateToProfileSearch('trending')">
           <i class="fas fa-chart-line"></i><span>Trending</span>
         </div>
-        <div class="nav-button">
+        <div class="nav-button" onclick="navigateToProfileSearch('popular')">
           <i class="fas fa-heart"></i><span>Popular</span>
         </div>
-        <div class="nav-button">
+        <div class="nav-button" onclick="navigateToProfileSearch('hot')">
           <i class="fas fa-fire"></i><span>Hot</span>
         </div>
-        <div class="nav-button">
+        <div class="nav-button" onclick="navigateToProfileSearch('creative')">
           <i class="fas fa-magic"></i><span>Creative</span>
         </div>
         <hr />
@@ -92,19 +100,36 @@
       <ul class="cards">
         {% for profile in data %}
         <li class="card_container">
-          <a
-            href="https://github.com/{{ profile.github_username }}"
-            target="_blank"
-            onclick="incrementCounter('{{ profile.github_username }}')"
-            class="card"
-          >
-            <img
-              src="https://raw.githubusercontent.com/mramitdas/AwesomeBioVault/{{ branch }}/app/static/profiles/{{ profile.github_username }}.png"
-              class="card__image"
-              alt="mramitdas"
-              preload="auto"
-              loading="lazy"
-            />
+          <div class="card">
+            <!-- LOADING DOTS starts here -->
+            <script src="{{ url_for('static', filename='js/loader.js') }}"></script>
+            <div class="loader{{ profile.github_username }}">
+              <div class="spinner-box">
+                <div class="pulse-container">
+                  <div class="pulse-bubble pulse-bubble-1"></div>
+                  <div class="pulse-bubble pulse-bubble-2"></div>
+                  <div class="pulse-bubble pulse-bubble-3"></div>
+                </div>
+              </div>
+            </div>
+            <!-- LOADING DOTS ends here -->
+
+            <a
+              href="https://github.com/{{ profile.github_username }}"
+              target="_blank"
+              onclick="incrementCounter('counter', '{{ profile.github_username }}')"
+              class="card"
+            >
+              <img
+                id="loadedImage{{ profile.github_username }}"
+                src="https://raw.githubusercontent.com/mramitdas/AwesomeBioVault/{{ branch }}/app/static/profiles/{{ profile.github_username }}.png"
+                class="card__image"
+                alt="mramitdas"
+                preload="auto"
+                loading="lazy"
+                onload="imageLoaded('{{ profile.github_username }}')"
+              />
+            </a>
             <div class="card__overlay">
               <div class="card__header">
                 <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
@@ -121,13 +146,23 @@
                     ><span id="counter{{ profile.github_username }}"
                       >{{ profile.profile_views }}</span
                     >
-                    views</span
+                    views &
+                    <span id="likes{{ profile.github_username }}"
+                      >{{ profile.profile_likes }}</span
+                    >
+                    likes</span
                   >
+                </div>
+                <div
+                  class="stage"
+                  onclick="incrementCounter('likes', '{{ profile.github_username }}')"
+                >
+                  <div class="heart"></div>
                 </div>
               </div>
               <p class="card__description">{{ profile.tags }}</p>
             </div>
-          </a>
+          </div>
         </li>
         {% endfor %}
       </ul>
@@ -151,7 +186,9 @@
               />
             </div>
             <div class="input-block">
-              <label for="github_username" class="input-label">Username</label>
+              <label for="github_username" class="input-label"
+                >Github Username</label
+              >
               <input
                 type="text"
                 name="github_username"
@@ -216,6 +253,16 @@
       src="https://kit.fontawesome.com/5f6c2c687e.js"
       crossorigin="anonymous"
     ></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+      // Define a global variable to hold the base URL
+      var baseUrl = "{{ url_for('static', filename='') }}";
+    </script>
+
+    <!-- Your JavaScript code -->
+    <script src="{{ url_for('static', filename='js/like.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
     <script src="{{ url_for('static', filename='js/counter.js') }}"></script>
     <script src="{{ url_for('static', filename='js/form.js') }}"></script>
     <script src="{{ url_for('static', filename='js/alert.js') }}"></script>
