@@ -96,16 +96,36 @@ class Base:
         """
         if type(filter) == str:
             if filter == "trending":
-                filter_param = "profile_views"
+                aggregate_pipeline = [{"$sort": {"profile_views": -1}}]
             elif filter == "popular":
-                filter_param = "profile_likes"
-            
-            aggregate_pipeline = [{"$sort": {filter_param: -1}}]
+                aggregate_pipeline = [{"$sort": {"profile_likes": -1}}]
+            elif filter == "hot":
+                aggregate_pipeline = [
+                    {
+                        "$addFields": {
+                            "combined_score": {
+                                "$sqrt": {
+                                    "$multiply": ["$profile_likes", "$profile_views"]
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "$sort": {
+                            "combined_score": -1  # Sort in descending order (greater to smaller scores)
+                        }
+                    },
+                ]
+
+            aggregate_pipeline.append(
+                {"$project": {"_id": 0, "email": 0, "password": 0}},
+            )
+
             return list(
                 self.__db.query(
                     db_name=self.__db_name,
                     table_name=self.__table_name,
-                    pipeline=aggregate_pipeline
+                    pipeline=aggregate_pipeline,
                 )
             )
 
