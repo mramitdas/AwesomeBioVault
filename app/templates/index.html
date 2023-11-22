@@ -15,7 +15,15 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
-  </head>
+    <script>
+      // Define a global variable to hold the base URL and the endpoint
+      var appData = {
+          baseUrl: "{{ url_for('static', filename='') }}",
+          userProfilesEndpoint: "{{ url_for('user.get_user_profiles') }}",
+          userProfilesFilter: "{{ url_for('user.filter_user_profile') }}"
+      };
+  </script>
+</head>
   <body>
     <!-- Side navigation bar starts here -->
     <div id="nav-bar">
@@ -31,7 +39,7 @@
         <hr />
       </div>
       <div id="nav-content">
-        <div class="nav-button">
+        <div class="nav-button" onclick="navigateToHomePage()">
           <i class="fas fa-solid fa-house"></i><span>Home</span>
         </div>
         <!-- <div class="nav-button"><i class="fas fa-images"></i><span>Assets</span></div> -->
@@ -39,19 +47,19 @@
           <i class="fas fa-thumbtack"></i><span>Pinned Items</span>
         </div>
         <hr />
-        <div class="nav-button">
+        <div class="nav-button" onclick="navigateToProfileSearch()">
           <i class="fas fa-regular fa-clock"></i><span>Latest</span>
         </div>
-        <div class="nav-button">
+        <div class="nav-button" onclick="navigateToProfileSearch()">
           <i class="fas fa-chart-line"></i><span>Trending</span>
         </div>
-        <div class="nav-button">
+        <div class="nav-button" onclick="navigateToProfileSearch()">
           <i class="fas fa-heart"></i><span>Popular</span>
         </div>
-        <div class="nav-button">
+        <div class="nav-button" onclick="navigateToProfileSearch()">
           <i class="fas fa-fire"></i><span>Hot</span>
         </div>
-        <div class="nav-button">
+        <div class="nav-button" onclick="navigateToProfileSearch()">
           <i class="fas fa-magic"></i><span>Creative</span>
         </div>
         <hr />
@@ -247,8 +255,14 @@
     ></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+    <script>
+      // Define a global variable to hold the base URL
+      var baseUrl = "{{ url_for('static', filename='') }}";
+    </script>
+
     <!-- Your JavaScript code -->
     <script src="{{ url_for('static', filename='js/like.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
     <script src="{{ url_for('static', filename='js/counter.js') }}"></script>
     <script src="{{ url_for('static', filename='js/form.js') }}"></script>
     <script src="{{ url_for('static', filename='js/alert.js') }}"></script>
