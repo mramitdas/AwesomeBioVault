@@ -1,5 +1,6 @@
 from app.config.config import Config
 from app.db.base import DataBase
+from typing import Union
 
 
 class Base:
@@ -83,7 +84,7 @@ class Base:
             )
         )
 
-    def filter(self, filter: dict) -> list[dict]:
+    def filter(self, filter: Union[dict, str]) -> list[dict]:
         """
         Retrieves data based on filter criteria from the database table.
 
@@ -93,6 +94,21 @@ class Base:
         Returns:
             list[dict]: A list of data that matches the filter criteria.
         """
+        if type(filter) == str:
+            if filter == "trending":
+                filter_param = "profile_views"
+            elif filter == "popular":
+                filter_param = "profile_likes"
+            
+            aggregate_pipeline = [{"$sort": {filter_param: -1}}]
+            return list(
+                self.__db.query(
+                    db_name=self.__db_name,
+                    table_name=self.__table_name,
+                    pipeline=aggregate_pipeline
+                )
+            )
+
         return list(
             self.__db.query(
                 db_name=self.__db_name,
