@@ -158,7 +158,7 @@ class DataBase:
 
         return response
 
-    def query(self, db_name=None, table_name=None, filter=None, bulk=False):
+    def query(self, db_name=None, table_name=None, filter=None, bulk=False, pipeline=None):
         """Retrieve data from a specified database and collection based on filters.
 
         Args:
@@ -180,8 +180,10 @@ class DataBase:
 
         database = self.mongod[db_name]
         dataset = database[table_name]
-
-        if bulk:
+        
+        if pipeline:
+            response = dataset.aggregate(pipeline)
+        elif bulk:
             if filter:
                 response = dataset.find(filter)
             else:
