@@ -18,13 +18,24 @@
     <script>
       // Define a global variable to hold the base URL and the endpoint
       var appData = {
-          baseUrl: "{{ url_for('static', filename='') }}",
-          userProfilesEndpoint: "{{ url_for('user.get_user_profiles') }}",
-          userProfilesFilter: "{{ url_for('user.filter_user_profile') }}"
+        baseUrl: "{{ url_for('static', filename='') }}",
+        userProfilesEndpoint: "{{ url_for('user.get_user_profiles') }}",
+        userProfilesFilter: "{{ url_for('user.filter_user_profile') }}",
       };
-  </script>
-</head>
+    </script>
+  </head>
   <body>
+    <!-- header starts here -->
+
+    <div class="header">
+      <div class="searchInputWrapper">
+        <input class="searchInput" type="text" placeholder="Search" />
+        <i class="searchInputIcon fa fa-search"></i>
+      </div>
+    </div>
+
+    <!-- header ends here -->
+
     <!-- Side navigation bar starts here -->
     <div id="nav-bar">
       <input id="nav-toggle" type="checkbox" checked="false" />
