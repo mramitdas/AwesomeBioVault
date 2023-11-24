@@ -136,6 +136,7 @@ cython_debug/
 
 ### Linux ###
 *~
+.DS_Store
 
 # temporary files which can be created if a process still has a handle open of a deleted file
 .fuse_hidden*
@@ -258,7 +259,7 @@ pip-selfcheck.json
 # http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
 
 ### VisualStudioCode ###
-.vscode/*
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json

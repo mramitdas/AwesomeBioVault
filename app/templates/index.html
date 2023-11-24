@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>AwesomeBioVault</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/favicon.ico') }}"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <script>
+      // Define a global variable to hold the base URL and the endpoint
+      var appData = {
+        baseUrl: "{{ url_for('static', filename='') }}",
+        userProfilesEndpoint: "{{ url_for('user.get_user_profiles') }}",
+        userProfilesFilter: "{{ url_for('user.filter_user_profile') }}",
+      };
+    </script>
+  </head>
+  <body>
+    <!-- header starts here -->
+
+    <div class="header">
+      <div class="searchInputWrapper">
+        <input class="searchInput" type="text" placeholder="Search" />
+        <i class="searchInputIcon fa fa-search"></i>
+      </div>
+    </div>
+
+    <!-- header ends here -->
+
+    <!-- Side navigation bar starts here -->
+    <div id="nav-bar">
+      <input id="nav-toggle" type="checkbox" checked="false" />
+      <div id="nav-header">
+        <a
+          id="nav-title"
+          href="https://github.com/mramitdas/AwesomeBioVault/"
+          target="_blank"
+          >AwesomeBio<i class="fas fa-solid fa-vault"></i
+        ></a>
+        <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
+        <hr />
+      </div>
+      <div id="nav-content">
+        <div class="nav-button" onclick="navigateToHomePage()">
+          <i class="fas fa-solid fa-house"></i><span>Home</span>
+        </div>
+        <!-- <div class="nav-button"><i class="fas fa-images"></i><span>Assets</span></div> -->
+        <div class="nav-button">
+          <i class="fas fa-thumbtack"></i><span>Pinned Items</span>
+        </div>
+        <hr />
+        <div class="nav-button" onclick="navigateToProfileSearch('latest')">
+          <i class="fas fa-regular fa-clock"></i><span>Latest</span>
+        </div>
+        <div class="nav-button" onclick="navigateToProfileSearch('trending')">
+          <i class="fas fa-chart-line"></i><span>Trending</span>
+        </div>
+        <div class="nav-button" onclick="navigateToProfileSearch('popular')">
+          <i class="fas fa-heart"></i><span>Popular</span>
+        </div>
+        <div class="nav-button" onclick="navigateToProfileSearch('hot')">
+          <i class="fas fa-fire"></i><span>Hot</span>
+        </div>
+        <div class="nav-button" onclick="navigateToProfileSearch('creative')">
+          <i class="fas fa-magic"></i><span>Creative</span>
+        </div>
+        <hr />
+        <div class="nav-button nav-modal-trigger">
+          <i class="fas fa-gem"></i><span>Add Profile</span>
+        </div>
+        <div id="nav-content-highlight"></div>
+      </div>
+      <input id="nav-footer-toggle" type="checkbox" />
+      <div id="nav-footer">
+        <div id="nav-footer-heading">
+          <div id="nav-footer-avatar">
+            <img src="https://avatars.githubusercontent.com/u/51442266?v=4" />
+          </div>
+          <div id="nav-footer-titlebox">
+            <a
+              id="nav-footer-title"
+              href="https://github.com/mramitdas"
+              target="_blank"
+              >Amit Das</a
+            ><span id="nav-footer-subtitle">Software Developer Eng. II</span>
+          </div>
+          <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+        </div>
+        <div id="nav-footer-content">
+          <p>
+            ❤️ Python<br />
+            Passionate about orchestrating end-to-end projects, integrating
+            seamlessly across diverse frameworks.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Side navigation bar ends here -->
+
+    <!-- Profile card starts here -->
+    <div class="main_content">
+      <ul class="cards">
+        {% for profile in data %}
+        <li class="card_container">
+          <div class="card">
+            <!-- LOADING DOTS starts here -->
+            <script src="{{ url_for('static', filename='js/loader.js') }}"></script>
+            <div class="loader{{ profile.github_username }}">
+              <div class="spinner-box">
+                <div class="pulse-container">
+                  <div class="pulse-bubble pulse-bubble-1"></div>
+                  <div class="pulse-bubble pulse-bubble-2"></div>
+                  <div class="pulse-bubble pulse-bubble-3"></div>
+                </div>
+              </div>
+            </div>
+            <!-- LOADING DOTS ends here -->
+
+            <a
+              href="https://github.com/{{ profile.github_username }}"
+              target="_blank"
+              onclick="incrementCounter('counter', '{{ profile.github_username }}')"
+              class="card"
+            >
+              <img
+                id="loadedImage{{ profile.github_username }}"
+                src="https://raw.githubusercontent.com/mramitdas/AwesomeBioVault/{{ branch }}/app/static/profiles/{{ profile.github_username }}.png"
+                class="card__image"
+                alt="mramitdas"
+                preload="auto"
+                loading="lazy"
+                onload="imageLoaded('{{ profile.github_username }}')"
+              />
+            </a>
+            <div class="card__overlay">
+              <div class="card__header">
+                <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
+                  <path />
+                </svg>
+                <img
+                  class="card__thumb"
+                  src="{{ profile.github_avatar }}"
+                  alt="mramitdas"
+                />
+                <div class="card__header-text">
+                  <h3 class="card__title">{{ profile.full_name }}</h3>
+                  <span class="card__status"
+                    ><span id="counter{{ profile.github_username }}"
+                      >{{ profile.profile_views }}</span
+                    >
+                    views &
+                    <span id="likes{{ profile.github_username }}"
+                      >{{ profile.profile_likes }}</span
+                    >
+                    likes</span
+                  >
+                </div>
+                <div
+                  class="stage"
+                  onclick="incrementCounter('likes', '{{ profile.github_username }}')"
+                >
+                  <div class="heart"></div>
+                </div>
+              </div>
+              <p class="card__description">{{ profile.tags }}</p>
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <!-- Profile card ends here -->
+
+    <!-- add profile form starts here -->
+    <div class="modal">
+      <div class="modal-container">
+        <form id="myForm">
+          <div class="modal-left">
+            <h1 class="modal-title">Join Our Community!</h1>
+            <p class="modal-desc">Unlock Exclusive Features</p>
+            <div class="input-block">
+              <label for="email" class="input-label">Email</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="mramitdas99@gmail.com"
+              />
+            </div>
+            <div class="input-block">
+              <label for="github_username" class="input-label"
+                >Github Username</label
+              >
+              <input
+                type="text"
+                name="github_username"
+                id="github_username"
+                placeholder="mramitdas"
+              />
+            </div>
+            <div class="input-block">
+              <label for="hashtags" class="input-label">HashTags</label>
+              <input
+                type="text"
+                id="hashtags"
+                autocomplete="off"
+                name="hashtags"
+                placeholder="#programming"
+              />
+              <div class="tag-container"></div>
+            </div>
+
+            <div class="modal-buttons">
+              <button class="input-button">Submit</button>
+            </div>
+          </div>
+        </form>
+        <div class="modal-right">
+          <img
+            src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=dfd2ec5a01006fd8c4d7592a381d3776&auto=format&fit=crop&w=1000&q=80"
+            alt=""
+          />
+        </div>
+        <button class="icon-button close-button">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+            <path
+              d="M 25 3 C 12.86158 3 3 12.86158 3 25 C 3 37.13842 12.86158 47 25 47 C 37.13842 47 47 37.13842 47 25 C 47 12.86158 37.13842 3 25 3 z M 25 5 C 36.05754 5 45 13.94246 45 25 C 45 36.05754 36.05754 45 25 45 C 13.94246 45 5 36.05754 5 25 C 5 13.94246 13.94246 5 25 5 z M 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.980469 15.990234 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 z"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- add profile form ends here -->
+
+    <!-- side pop up alert starts here -->
+    <div class="alert">
+      <div class="toast">
+        <div class="toast-content">
+          <i id="alert-icon" class="fas fa-solid fa-check check"></i>
+
+          <div class="message">
+            <span id="alert-title" class="text text-1">Success</span>
+            <span id="alert-description" class="text text-2"
+              >Your changes has been saved</span
+            >
+          </div>
+        </div>
+        <i class="fa-solid fa-xmark close"></i>
+        <div class="progress"></div>
+      </div>
+    </div>
+    <!-- side pop up alert ends here -->
+
+    <script
+      src="https://kit.fontawesome.com/5f6c2c687e.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+      // Define a global variable to hold the base URL
+      var baseUrl = "{{ url_for('static', filename='') }}";
+    </script>
+
+    <!-- Your JavaScript code -->
+    <script src="{{ url_for('static', filename='js/like.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/filter.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/counter.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/form.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/alert.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/hashtag.js') }}"></script>
+  </body>
+</html>
