@@ -94,8 +94,10 @@ class Base:
         Returns:
             list[dict]: A list of data that matches the filter criteria.
         """
-        if type(filter) == str:
-            if filter == "trending":
+        if type(filter) == str:           
+            if filter == "latest":
+                aggregate_pipeline = [{"$sort": {"created_at": -1}}]
+            elif filter == "trending":
                 aggregate_pipeline = [{"$sort": {"profile_views": -1}}]
             elif filter == "popular":
                 aggregate_pipeline = [{"$sort": {"profile_likes": -1}}]
@@ -116,7 +118,9 @@ class Base:
                         }
                     },
                 ]
-
+            elif filter == "creative":
+                aggregate_pipeline = [{"$sort": {"profile_likes": -1}}]
+            
             aggregate_pipeline.append(
                 {"$project": {"_id": 0, "email": 0, "password": 0}},
             )

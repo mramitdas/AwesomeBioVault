@@ -19,6 +19,7 @@ html,
 body {
   margin: 0;
   background: var(--background);
+  overflow-x: hidden;
 }
 
 /* navbar starts here */
@@ -767,8 +768,8 @@ p {
 }
 /* hashtag input ends here */
 
+/* alert box starts here */
 .alert {
-  /* height: 100vh; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -872,11 +873,14 @@ p {
 .toast.active ~ button {
   pointer-events: none;
 }
+/* alert box ends here */
 
+/* like button starts here */
 .heart {
   width: 100px;
   height: 100px;
-  background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
+  background: url("https://cssanimation.rocks/images/posts/steps/heart.png")
+    no-repeat;
   background-position: 1 0;
   cursor: pointer;
   transition: background-position 1s steps(28);
@@ -894,9 +898,10 @@ p {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+/* like button ends here */
 
-/* PULSE BUBBLES */
-.spinner-box{
+/* preloader starts here */
+.spinner-box {
   display: flex;
   justify-content: center;
   padding-top: 120px;
@@ -917,13 +922,13 @@ p {
 }
 
 .pulse-bubble-1 {
-    animation: pulse .4s ease 0s infinite alternate;
+  animation: pulse 0.4s ease 0s infinite alternate;
 }
 .pulse-bubble-2 {
-    animation: pulse .4s ease .2s infinite alternate;
+  animation: pulse 0.4s ease 0.2s infinite alternate;
 }
 .pulse-bubble-3 {
-    animation: pulse .4s ease .4s infinite alternate;
+  animation: pulse 0.4s ease 0.4s infinite alternate;
 }
 
 /* KEYFRAMES */
@@ -933,7 +938,68 @@ p {
     transform: scale(1);
   }
   to {
-    opacity: .25;
-    transform: scale(.75);
+    opacity: 0.25;
+    transform: scale(0.75);
   }
 }
+/* preloader ends here */
+
+/* header starts here */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 30px;
+  width: 100%;
+}
+
+/* search bar starts here */
+.searchInputWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+}
+
+.searchInput {
+  width: 100%;
+  height: 2rem;
+  padding: 0.5rem 2rem;
+  border-radius: 2rem;
+  border: none;
+  transition: transform 0.1s ease-in-out;
+  font-size: 1em;
+  box-shadow: 0 0 1em var(--navbar-light-secondary);
+}
+
+::placeholder {
+  color: var(--navbar-light-secondary);
+}
+
+.searchInput:focus::placeholder {
+  transition: transform 0.1s ease-in-out;
+}
+
+.searchInput:focus {
+  outline: none;
+  transform: scale(1.1);
+  transition: all 0.1s ease-in-out;
+}
+
+.searchInputIcon {
+  position: absolute;
+  right: -2rem;
+  top: 0.8rem;
+  color: #a1a1a1;
+  transition: all 0.1s ease-in-out;
+}
+
+.header:focus-within > .searchInputWrapper > .searchInputIcon {
+  right: -3rem;
+}
+.searchInputWrapper:focus-within {
+  transition: all 0.1s ease-in-out;
+}
+/* search bar ends here */
+
+/* header ends here */
